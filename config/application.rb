@@ -10,6 +10,8 @@ module PlannerRistorMarkt
   class Application < Rails::Application
     Rails.application.config.assets.compress = true
     config.assets.precompile += %w(.css .js .svg .eot .woff .woff2 .ttf .png .jpg .gif)
+
+    config.active_job.queue_adapter = :delayed_job
     # Settings in config/environments/* take precedence over those specified here.
     # Application configuration should go into files in config/initializers
     # -- all .rb files in that directory are automatically loaded.

@@ -14,4 +14,5 @@
 //= require three.min.js
 //= require jquery_ujs
 //= require turbolinks
+//= require global
 //= require_tree

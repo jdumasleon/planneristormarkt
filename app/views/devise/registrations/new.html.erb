@@ -27,7 +27,7 @@
 
           <div class="input-field col s12 m12">
             <i class="fa fa-unlock prefix orange-text"></i>
-            <%= f.password_field :password, autocomplete: "off", id: "icon_password", html:{type: "password", class: "validate"} %>
+            <%= f.password_field :password, autocomplete: "off", id: "icon_password", html:{type: "password", class: "validate estimate-password"} %>
             <label for="icon_password">password</label>
             <% if @validatable %>
               <span class="help-block"><%= @minimum_password_length %> characters minimum</span>
@@ -36,10 +36,9 @@
 
           <div class="input-field col s12 m12">
             <i class="fa fa-unlock-alt prefix orange-text"></i>
-            <%= f.password_field :password_confirmation, id: "icon_password_confirmation", autocomplete: "off", html:{type: "password", class: "validate"} %>
+            <%= f.password_field :password_confirmation, id: "icon_password_confirmation", autocomplete: "off", html:{type: "password", class: "validate estimate-password"} %>
             <label for="icon_password_confirmation">password_confirmation</label>
           </div>
-
           <br>
           <%= render "devise/shared/links" %>
           <br>
