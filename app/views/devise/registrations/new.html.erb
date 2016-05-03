@@ -1,0 +1,56 @@
+<% provide(:title, "Sign Up") %>
+<br><br>
+<div class="container">
+  <h3 class="orange-text center">Register Free!</h3>
+  <br>
+  <div class="row" >
+      <div class="col s6 offset-m3">
+        <div class="card-panel z-depth-5 " style="height: 420px;">
+          <div class="row">
+          <%= form_for(resource, as: resource_name, url: registration_path(resource_name), html: {class: "col s12 m11"}) do |f| %>
+          <div class="container blue-grey lighten-5">
+            <%= devise_error_messages! %>
+          </div>
+
+          <div class="row">
+          <div class="input-field col s12 m12">
+            <i class="fa fa-user prefix orange-text"></i>
+            <%= f.text_field :name, autofocus: true, id: "icon_name" %>
+            <label for="icon_name">name</label>
+          </div>
+
+          <div class="input-field col s12 m12">
+            <i class="fa fa-envelope-o prefix orange-text"></i>
+            <%= f.email_field :email, id: "icon_email", html:{type: "email", class: "validate"} %>
+            <label for="icon_email">email</label>
+          </div>
+
+          <div class="input-field col s12 m12">
+            <i class="fa fa-unlock prefix orange-text"></i>
+            <%= f.password_field :password, autocomplete: "off", id: "icon_password", html:{type: "password", class: "validate"} %>
+            <label for="icon_password">password</label>
+            <% if @validatable %>
+              <span class="help-block"><%= @minimum_password_length %> characters minimum</span>
+            <% end %>
+          </div>
+
+          <div class="input-field col s12 m12">
+            <i class="fa fa-unlock-alt prefix orange-text"></i>
+            <%= f.password_field :password_confirmation, id: "icon_password_confirmation", autocomplete: "off", html:{type: "password", class: "validate"} %>
+            <label for="icon_password_confirmation">password_confirmation</label>
+          </div>
+
+          <br>
+          <%= render "devise/shared/links" %>
+          <br>
+
+          <div class="actions input-field col s12 m11 offset-m1">
+            <%= f.submit "Sign up", class: "btn orange waves-effect waves-light"%>
+            <%= link_to 'Sign In', new_user_session_path,  class: "btn orange white-text waves-effect waves-light right"%>
+          </div>
+          <% end %>
+          </div>
+        </div><!--card-->
+      </div>
+  </div>
+</div><!--conatiner-->
