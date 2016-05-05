@@ -3,6 +3,7 @@
  * Copyright 2014-2015 Materialize
  * MIT License (https://raw.githubusercontent.com/Dogfalo/materialize/master/LICENSE)
  */
+
 .materialize-red {
   background-color: #e51c23 !important;
 }
@@ -8190,3 +8191,238 @@ button.picker__today:focus, button.picker__clear:focus, button.picker__close:foc
     margin-bottom: 5em;
   }
 }
+/* Custom Stylesheet */
+/**
+ * Use this file to override Materialize files so you can update
+ * the core Materialize files in the future
+ *
+ * Made By MaterializeCSS.com
+ */
+
+ nav ul a,
+ nav .brand-logo {
+   color: white;
+ }
+
+.iconFeature{
+  height: 90px;
+}
+
+ .containerFooter{
+    width: 100%;
+    position: absolute;
+    left: 0px;
+ }
+
+ .textShadow{
+
+   position: absolute;
+ -webkit-box-sizing: content-box;
+  -moz-box-sizing: content-box;
+  box-sizing: content-box;
+  border: none;
+  color: rgba(255,255,255,1);
+  text-align: center;
+  -o-text-overflow: clip;
+  text-overflow: clip;
+  text-shadow: 0 15px 29px rgba(0,0,0,0.0980392) , 10px 20px 5px rgba(0,0,0,0.0470588) , -10px 20px 5px rgba(0,0,0,0.0470588) ;
+  -webkit-transition: all 200ms cubic-bezier(0.42, 0, 0.58, 1) 10ms;
+  -moz-transition: all 200ms cubic-bezier(0.42, 0, 0.58, 1) 10ms;
+  -o-transition: all 200ms cubic-bezier(0.42, 0, 0.58, 1) 10ms;
+  transition: all 200ms cubic-bezier(0.42, 0, 0.58, 1) 10ms;
+
+}
+
+.textShadow:hover
+{
+  position: absolute;
+	text-shadow: 0 -15px 29px rgba(0,0,0,0.0980392) , 10px -20px 5px rgba(0,0,0,0.0470588) , -10px -20px 5px rgba(0,0,0,0.0470588) ;
+}
+
+ .button-collapse {
+   color: #ee6e73;
+ }
+
+ .parallax-container {
+   min-height: 550px;
+   line-height: 0;
+   height: auto;
+   color: rgba(255,255,255,.9);
+ }
+   .parallax-container .section {
+     width: 100%;
+   }
+
+ @media only screen and (max-width : 992px) {
+   .parallax-container .section {
+     position: absolute;
+     top: 40%;
+   }
+   #index-banner .section {
+     top: 10%;
+   }
+ }
+
+ @media only screen and (max-width : 600px) {
+   #index-banner .section {
+     top: 0;
+   }
+ }
+
+
+ .icon-block {
+   padding: 0 15px;
+ }
+
+ footer.page-footer {
+   margin: 0;
+ }
+
+
+
+
+  .parallax img
+  {
+  	 background-repeat: no-repeat;
+  	 background-size: cover;
+  }
+  .parallax-container
+  {
+  	color: black;
+  }
+  @media only screen and (max-width : 600px) {
+   .parallax-container
+  {
+  	color: white;
+  }
+ }
+  nav a.button-collapse
+  {
+  	color:white;
+  }
+  .purple.lighten-1 {
+   background-color: #CC0066 !important;
+ }
+ .teal-text.text-lighten-2 {
+   color: #CC0066 !important;
+ }
+ .share-buttons{
+ 	list-style: none;
+ }
+
+ .share-buttons li{
+ 	display: inline;
+ }
+ nav
+ {
+ 	overflow: visible;
+ }
+ nav li a {
+     -webkit-transition: background .3s ease-in-out;
+     -moz-transition: background .3s ease-in-out;
+     transition: background .3s ease-in-out;
+ }
+
+
+
+ .post-preview > .post-meta {
+   color: #808080;
+   font-size: 18px;
+   font-style: italic;
+   margin-top: 0;
+ }
+ .post-preview > .post-meta a{
+  color:#616161;
+ }
+ .post-preview > .post-meta a:hover{
+ color: #26a69a;
+ }
+
+
+ .post-preview > a > .post-subtitle {
+   margin: 0;
+   color:#616161;
+   font-weight: 300;
+   margin-bottom: 10px;
+ }
+ .post-preview > a > .post-subtitle:hover{
+ color: #26a69a;
+ }
+ .post-preview > a > .post-title {
+   font-size: 36px;
+   color:#616161;
+   margin-top: 30px;
+   margin-bottom: 10px;
+ }
+ .post-preview > a > .post-title:hover{
+ 	color: #26a69a;
+ }
+
+ hr {
+ 	height:0;
+   margin-top: 20px;
+   margin-bottom: 20px;
+   border: 0;
+   border-top: 1px solid #eee;
+ }
+
+ .subTitleFont
+ {
+ 	 -webkit-box-sizing: content-box;
+   -moz-box-sizing: content-box;
+   box-sizing: content-box;
+   border: none;
+   font: normal 25px/1 "alex-brush", Helvetica, sans-serif;
+
+
+   -o-text-overflow: ellipsis;
+   text-overflow: ellipsis;
+ }
+ .titleFont
+ {
+ 	-webkit-box-sizing: content-box;
+   -moz-box-sizing: content-box;
+   box-sizing: content-box;
+   border: none;
+   font: normal 65px/1 "carter-one", Helvetica, sans-serif;
+
+
+   -o-text-overflow: ellipsis;
+   text-overflow: ellipsis;
+
+ }
+
+ main {
+     padding-left: 240px;
+   }
+
+   @media only screen and (max-width : 992px) {
+     header, main, footer {
+       padding-left: 0;
+     }
+   }
+
+ .fa{
+
+ 	color:white;
+ }
+ .fa:hover
+ {
+ 	color:#26a69a;
+ }
+/*
+ * This is a manifest file that'll be compiled into application.css, which will include all the files
+ * listed below.
+ *
+ * Any CSS and SCSS file within this directory, lib/assets/stylesheets, vendor/assets/stylesheets,
+ * or any plugin's vendor/assets/stylesheets directory can be referenced here using a relative path.
+ *
+ * You're free to add application-wide styles to this file and they'll appear at the bottom of the
+ * compiled file so the styles you add here take precedence over styles defined in any styles
+ * defined in the other CSS/SCSS files in this directory. It is generally better to create a new
+ * file per style scope.
+ *
+
+
+ */
+

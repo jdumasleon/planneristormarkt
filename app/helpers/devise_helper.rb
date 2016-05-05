@@ -7,11 +7,14 @@ module DeviseHelper
                       :count => resource.errors.count,
                       :resource => resource.class.model_name.human.downcase)
 
+
+
     html = <<-HTML
     <div id="error_explanation">
-      <h5>#{sentence}</h5>
-      <ul>#{messages}</ul>
+      <h5 class="center-align">#{sentence}</h5>
+      <ul class="red-text center-align">#{messages}</ul>
     </div>
+
     HTML
 
     html.html_safe

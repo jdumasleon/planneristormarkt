@@ -5,8 +5,8 @@ var ARC_SEGMENTS = 200;
 var equipmentMesh;
 var equipments = [];
 
-			init();
-			animate();
+		//	init();
+			//animate();
 
 			function init() {
         container = document.getElementById('three');

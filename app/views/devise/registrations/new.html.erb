@@ -1,16 +1,13 @@
 <% provide(:title, "Sign Up") %>
-<br><br>
+<br>
 <div class="container">
   <h3 class="orange-text center">Register Free!</h3>
-  <br>
   <div class="row" >
+      <%= devise_error_messages! %>
       <div class="col s6 offset-m3">
         <div class="card-panel z-depth-5 " style="height: 420px;">
           <div class="row">
           <%= form_for(resource, as: resource_name, url: registration_path(resource_name), html: {class: "col s12 m11"}) do |f| %>
-          <div class="container blue-grey lighten-5">
-            <%= devise_error_messages! %>
-          </div>
 
           <div class="row">
           <div class="input-field col s12 m12">
@@ -19,26 +16,30 @@
             <label for="icon_name">name</label>
           </div>
 
+          <br>
           <div class="input-field col s12 m12">
             <i class="fa fa-envelope-o prefix orange-text"></i>
-            <%= f.email_field :email, id: "icon_email", html:{type: "email", class: "validate"} %>
+            <%= f.email_field :email, id: "icon_email", html:{type: "email"} %>
             <label for="icon_email">email</label>
           </div>
 
+          <br>
           <div class="input-field col s12 m12">
             <i class="fa fa-unlock prefix orange-text"></i>
             <%= f.password_field :password, autocomplete: "off", id: "icon_password", html:{type: "password", class: "validate estimate-password"} %>
             <label for="icon_password">password</label>
             <% if @validatable %>
-              <span class="help-block"><%= @minimum_password_length %> characters minimum</span>
+              <span><%= @minimum_password_length %> characters minimum</span>
             <% end %>
           </div>
 
+          <br>
           <div class="input-field col s12 m12">
             <i class="fa fa-unlock-alt prefix orange-text"></i>
             <%= f.password_field :password_confirmation, id: "icon_password_confirmation", autocomplete: "off", html:{type: "password", class: "validate estimate-password"} %>
-            <label for="icon_password_confirmation">password_confirmation</label>
+            <label for="icon_password_confirmation">password confirmation</label>
           </div>
+
           <br>
           <%= render "devise/shared/links" %>
           <br>

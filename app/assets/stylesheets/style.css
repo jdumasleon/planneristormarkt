@@ -10,10 +10,6 @@
    color: white;
  }
 
-.slider .myslider{
-  background-color: rgb(255, 152, 0);
-}
-
 .iconFeature{
   height: 90px;
 }
@@ -201,6 +197,16 @@
    text-overflow: ellipsis;
 
  }
+
+ main {
+     padding-left: 240px;
+   }
+
+   @media only screen and (max-width : 992px) {
+     header, main, footer {
+       padding-left: 0;
+     }
+   }
 
  .fa{
 
