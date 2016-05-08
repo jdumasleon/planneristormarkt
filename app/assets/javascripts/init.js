@@ -23,7 +23,7 @@
     $('.collapsible').collapsible();
 
     $('.button-collapse').sideNav({
-     menuWidth: 300, // Default is 240
+     menuWidth: 240, // Default is 240
      edge: 'left', // Choose the horizontal origin
      closeOnClick: false // Closes side-nav on <a> clicks, useful for Angular/Meteor
       }
@@ -45,9 +45,21 @@
        return false;
      }
    }
-   if (is_touch_device()) {
+    if (is_touch_device()) {
      $('#nav-mobile').css({ overflow: 'auto'});
    }
+
+   $('.dropdown-button').dropdown({
+        inDuration: 300,
+        outDuration: 225,
+        constrain_width: false, // Does not change width of dropdown to that of the activator
+        hover: true, // Activate on hover
+        gutter: 0, // Spacing from edge
+        belowOrigin: false, // Displays dropdown below the button
+        alignment: 'left' // Displays dropdown with edge aligned to the left of button
+      }
+    );
+
 
   }); // end of document ready
 })(jQuery); // end of jQuery name space

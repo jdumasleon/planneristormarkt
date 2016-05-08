@@ -1,46 +1,105 @@
-<% header "Edit #{resource_name.to_s.humanize}" %>
+<!--<% header "Edit #{resource_name.to_s.humanize}" %>-->
+<% provide(:title, "Edit") %>
 
-<%= form_for(resource, as: resource_name, url: registration_path(resource_name), html: { method: :put }) do |f| %>
-  <%= devise_error_messages! %>
+<%= render "shared/nav1"%>
 
-  <div class="form-group">
-    <%= f.label :name %>
-    <%= f.text_field :name, class: 'form-control' %>
+<div class="container">
+  <h3 class="orange-text center">Edit User Account</h3>
+  <div class="row" >
+      <%= devise_error_messages! %>
+      <div class="col s12">
+        <div class="card-panel z-depth-5">
+          <div class="actions input-field col s12 m11">
+            <%= link_to "Back", :back, class: 'btn white orange-text waves-effect waves-orange' %>
+          </div>
+          <div class="row">
+            <div class="col s6">
+              <br><br><br>
+              <div class="container center">
+                <img class="circle center z-depth-5" src="/planner/img/user1.png" alt="" />
+              </div>
+              <br>
+              <div class="row center">
+                <form class="" action="index.html" method="post">
+                  <div class="file-field input-field">
+                    <div class="col s2 offset-m1">
+                      <div class="btn-floating white waves-effect waves-orange right">
+                        <i class="fa fa-upload orange-text"></i>
+                        <input type="file">
+                      </div>
+                    </div>
+                    <div class="col s8">
+                      <div class="file-path-wrapper left">
+                        <input class="file-path validate" type="text">
+                      </div>
+                    </div>
+                  </div>
+                </form>
+              </div>
+
+              <div class="container center" style="margin-top:133px">
+                <h4>Cancel my account</h4>
+                <%= button_to "Unhappy?", registration_path(resource_name), class: 'btn red waves-effect waves-light',
+                                data: { confirm: "Are you sure?" }, method: :delete %>
+              </div>
+            </div>
+
+            <div class="col s6">
+              <br>
+              <%= form_for(resource, as: resource_name, url: registration_path(resource_name), html: {class: "col s12 m11", method: :put }) do |f| %>
+
+              <div class="row">
+              <div class="input-field col s12 m12">
+                <i class="fa fa-user prefix orange-text"></i>
+                <%= f.text_field :name, autofocus: true, id: "icon_name", html:{class: "form-control", type: "email"}  %>
+                <label for="icon_name">name</label>
+              </div>
+
+              <br>
+              <div class="input-field col s12 m12">
+                <i class="fa fa-envelope-o prefix orange-text"></i>
+                <%= f.email_field :email, id: "icon_email", html:{class: 'form-control', type: "email"} %>
+                <label for="icon_email">email</label>
+                <% if devise_mapping.confirmable? && resource.pending_reconfirmation? %>
+                  <span class="label label-info">Currently waiting confirmation for: <%= resource.unconfirmed_email %></span>
+                <% end %>
+              </div>
+
+              <br>
+              <div class="input-field col s12 m12">
+                <i class="fa fa-unlock prefix orange-text"></i>
+                <%= f.password_field :password, autocomplete: "off", id: "icon_password", html:{type: "password", class: "validate estimate-password form-control"} %>
+                <label for="icon_password">password</label>
+                <span class="help-block">leave blank if you don't want to change it</span>
+                <% if @validatable %>
+                  <span><%= @minimum_password_length %> characters minimum</span>
+                <% end %>
+              </div>
+
+              <br>
+              <div class="input-field col s12 m12">
+                <i class="fa fa-unlock-alt prefix orange-text"></i>
+                <%= f.password_field :password_confirmation, id: "icon_password_confirmation", autocomplete: "off", html:{type: "password", class: "validate estimate-password form-control"} %>
+                <label for="icon_password_confirmation">password confirmation</label>
+              </div>
+
+              <br>
+              <div class="input-field col s12 m12">
+                <i class="fa fa-unlock-alt prefix orange-text"></i>
+                <%= f.password_field :current_password, id: "current_password", autocomplete: "off", html:{type: "password", class: "validate estimate-password form-control"} %>
+                <label for="icon_password_confirmation">current password</label>
+                <span class="help-block">we need your current password to confirm your changes</span>
+              </div>
+
+              <div class="actions input-field col s12 m11 center">
+                <%= f.submit "Update", class: "btn orange waves-effect waves-light"%>
+              </div>
+
+              <% end %>
+              </div>
+            </div>
+          </div>
+        </div><!--card-->
+      </div>
   </div>
-
-  <div class="form-group">
-    <%= f.label :email %>
-    <%= f.email_field :email, class: 'form-control' %>
-    <% if devise_mapping.confirmable? && resource.pending_reconfirmation? %>
-      <span class="label label-info">Currently waiting confirmation for: <%= resource.unconfirmed_email %></span>
-    <% end %>
-  </div>
-
-  <div class="form-group">
-    <%= f.label :password %>
-    <%= f.password_field :password, autocomplete: "off", class: 'form-control' %>
-    <span class="help-block">leave blank if you don't want to change it</span>
-  </div>
-
-  <div class="form-group">
-    <%= f.label :password_confirmation %><br />
-    <%= f.password_field :password_confirmation, autocomplete: "off", class: 'form-control' %>
-  </div>
-
-  <div class="form-group">
-    <%= f.label :current_password %>
-    <%= f.password_field :current_password, autocomplete: "off", class: 'form-control' %>
-    <span class="help-block">we need your current password to confirm your changes</span>
-  </div>
-
-  <%= f.submit "Update", class: 'btn btn-primary' %>
-<% end %>
-
-<h3>Cancel my account</h3>
-
-<p>Unhappy?
-  <%= button_to "Cancel my account", registration_path(resource_name), class: 'btn btn-danger',
-                data: { confirm: "Are you sure?" }, method: :delete %>
-</p>
-
-<%= link_to "Back", :back, class: 'btn btn-default btn-sm' %>
+</div><!--conatiner-->

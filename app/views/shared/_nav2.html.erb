@@ -1,0 +1,23 @@
+<nav class="top-nav white">
+  <a href="#"><img class="textShadow brand-logo" style="height: 50px; top:5px; margin-left: 60px;" src="/planner/img/logo03.png"></a>
+  <div class="container">
+    <div class="nav-wrapper">
+      <a href="#" data-activates="mobile-demo" class="button-collapse"><i class="fa fa-bars orange-text text-darken-3" aria-hidden="true"></i></a>
+      <ul class="right hide-on-med-and-down">
+        <li><%= link_to "Home", root_path, class: "orange-text waves-effect waves-light left" %></li>
+        <% if user_signed_in? %>
+        <li><a class="black-text"><%= current_user.name %><i class="fa fa-caret-down right dropdown-button black-text waves-orange" href="#!" data-activates="user"></i></a></li>
+        <ul id='user' class='dropdown-content'>
+          <li><%= link_to 'Profile', edit_user_registration_path, class: "orange-text waves-effect waves-light" %></li>
+          <li class="divider"></li>
+          <li><%= link_to 'Log out', destroy_user_session_path, method: :delete, class: "orange-text waves-effect waves-light"%></li>
+        </ul>
+        <% else %>
+          <li><%= link_to 'Sign In', new_user_session_path, class: "orange-text waves-effect waves-light"%></li>
+          <li><%= link_to 'Sign Up', new_user_registration_path,  class: "orange-text waves-effect waves-light"%></li>
+        <% end %>
+        <!--<li><a href="http://www.Ristormarkt.com"><img class="textShadow" style="height: 60px; top:2px" src="/planner/img/Logo Ristormarkt.png"></a></li>-->
+      </ul>
+    </div>
+  </div>
+</nav>
