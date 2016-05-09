@@ -8,14 +8,15 @@
     <li class="no-padding grey lighten-4">
       <ul class="collapsible collapsible-accordion">
         <li>
-          <a class="collapsible-header black-text grey lighten-4"><%= current_user.name %><i class="right black-text fa fa-caret-down"></i></a>
+          <!-- <a class="collapsible-header black-text grey lighten-4"><%= current_user.name %><i class="right black-text fa fa-caret-down"></i></a>
           <div class="collapsible-body">
             <ul>
-              <li><%= link_to 'Profile', edit_user_registration_path, class: "grey lighten-4 black-text waves-effect waves-light" %></li>
+              <li><%= link_to 'Profile', profile_path, class: "orange-text waves-effect waves-orange" %></li>
+              <li><%= link_to 'Edit', edit_user_registration_path, class: "orange-text waves-effect waves-orange" %></li>
               <li class="divider"></li>
-              <li><%= link_to 'Log out', destroy_user_session_path, method: :delete, class: "grey lighten-4 black-text waves-effect waves-light"%></li>
+              <li><%= link_to 'Log out', destroy_user_session_path, method: :delete, class: "grey lighten-4 black-text waves-effect waves-orange"%></li>
             </ul>
-          </div>
+          </div> -->
         </li>
       </ul>
     </li>
@@ -33,17 +34,17 @@
       <ul>
        <li class="no-padding">
          <ul class="collapsible collapsible-accordion">
-           <li class="bold"><a class="collapsible-header  waves-effect waves-teal">Categorie3</a>
+           <li class="bold"><a class="collapsible-header waves-effect waves-orange">Categorie3</a>
              <div class="collapsible-body">
                <ul>
                  <% @equipments.each do |equipment| %>
-                 <li>
-                   <div class="row center">
-                     <div class="col s6">
-                       <div ondragend="addCollada('<%= equipment.collada_url%>')"> <img  src="<%= equipment.image_url%>" id="<%= equipment.code%>" style="height:80px; width:80px;" /></div>
+                 <li class="liasset">
+                   <div class="row center assetMenu">
+                     <div class="col s6 borderAsset">
+                       <div ondragend="addCollada('<%= equipment.collada_url%>')"> <img  src="<%= equipment.image_url%>" id="<%= equipment.code%>" style="height: 70%;width: 70%;" /></div>
                      </div>
-                     <div class="col s6">
-                       <div ondragend="addCollada('<%= equipment.collada_url%>')"> <img  src="<%= equipment.image_url%>" id="<%= equipment.code%>" style="height:80px; width:80px;" /></div>
+                     <div class="col s6 borderAsset">
+                       <div ondragend="addCollada('<%= equipment.collada_url%>')"> <img  src="<%= equipment.image_url%>" id="<%= equipment.code%>" style="height: 70%;width: 70%;" /></div>
                      </div>
                    </div>
                  </li>

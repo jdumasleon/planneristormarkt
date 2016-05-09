@@ -6,15 +6,22 @@
       <ul class="right hide-on-med-and-down">
         <li><%= link_to "Home", root_path, class: "orange-text waves-effect waves-light left" %></li>
         <% if user_signed_in? %>
-        <li><a class="black-text"><%= current_user.name %><i class="fa fa-caret-down right dropdown-button black-text waves-orange" href="#!" data-activates="user"></i></a></li>
+        <li>
+          <a class="black-text"><%= current_user.name %>
+            <i class="fa fa-caret-down right dropdown-button black-text waves-orange" href="#!" data-activates="user"></i>
+          </a>
+        </li>
+        <li><img class="circle z-depth-1  " src="/planner/img/user1.png" alt="" style="height:40px; margin-top:10px" /></li>
+
         <ul id='user' class='dropdown-content'>
-          <li><%= link_to 'Profile', edit_user_registration_path, class: "orange-text waves-effect waves-light" %></li>
+          <li><%= link_to 'Profile', profile_path, class: "orange-text waves-effect waves-orange" %></li>
+          <li><%= link_to 'Edit', edit_user_registration_path, class: "orange-text waves-effect waves-orange" %></li>
           <li class="divider"></li>
-          <li><%= link_to 'Log out', destroy_user_session_path, method: :delete, class: "orange-text waves-effect waves-light"%></li>
+          <li><%= link_to 'Log out', destroy_user_session_path, method: :delete, class: "orange-text waves-effect waves-orange"%></li>
         </ul>
         <% else %>
-          <li><%= link_to 'Sign In', new_user_session_path, class: "orange-text waves-effect waves-light"%></li>
-          <li><%= link_to 'Sign Up', new_user_registration_path,  class: "orange-text waves-effect waves-light"%></li>
+          <li><%= link_to 'Sign In', new_user_session_path, class: "orange-text waves-effect waves-orange"%></li>
+          <li><%= link_to 'Sign Up', new_user_registration_path,  class: "orange-text waves-effect waves-orange"%></li>
         <% end %>
         <!--<li><a href="http://www.Ristormarkt.com"><img class="textShadow" style="height: 60px; top:2px" src="/planner/img/Logo Ristormarkt.png"></a></li>-->
       </ul>

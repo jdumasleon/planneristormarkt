@@ -1,22 +1,28 @@
 <div id="navbar" class="navbar-fixed scrollspy">
 <nav class="white">
   <div class="nav-wrapper container">
-    <div class="container left"><a id="logo-container" href="#" class="brand-logo"><img class="textShadow" style="height: 60px;" src="/planner/img/logo03.png"></a></div>
+    <div class="container left">
+      <a id="logo-container" href="/" class="brand-logo">
+        <img class="textShadow" style="height: 60px;" src="/planner/img/logo03.png">
+      </a>
+    </div>
 
     <a href="#" data-activates="mobile-demo" class="button-collapse"><i class="fa fa-bars orange-text text-darken-3" aria-hidden="true"></i></a>
     <ul class="right hide-on-med-and-down">
       <% if user_signed_in? %>
+        <li><img class="circle z-depth-1  " src="/planner/img/user1.png" alt="" style="height:40px; margin-top:10px" /></li>
         <li><a class="black-text"><%= current_user.name %><i class="fa fa-caret-down right dropdown-button black-text waves-orange" href="#!" data-activates="user"></i></a></li>
         <ul id='user' class='dropdown-content'>
-          <li><%= link_to 'Profile', edit_user_registration_path, class: "orange-text waves-effect waves-light" %></li>
+          <li><%= link_to 'Profile', profile_path, class: "orange-text waves-effect waves-orange" %></li>
+          <li><%= link_to 'Edit', edit_user_registration_path, class: "orange-text waves-effect waves-orange" %></li>
           <li class="divider"></li>
-          <li><%= link_to 'Log out', destroy_user_session_path, method: :delete, class: "orange-text waves-effect waves-light"%></li>
+          <li><%= link_to 'Log out', destroy_user_session_path, method: :delete, class: "orange-text waves-effect waves-orange"%></li>
         </ul>
       <% else %>
-        <li><%= link_to 'Sign In', new_user_session_path, class: "orange-text waves-effect waves-light"%></li>
-        <li><%= link_to 'Sign Up', new_user_registration_path,  class: "orange-text waves-effect waves-light"%></li>
+        <li><%= link_to 'Sign In', new_user_session_path, class: "orange-text waves-effect waves-orange"%></li>
+        <li><%= link_to 'Sign Up', new_user_registration_path,  class: "orange-text waves-effect waves-orange"%></li>
       <% end %>
-      <li><%= link_to "Planner", planner_path, class: "orange-text waves-effect waves-light left" %></li>
+      <li><%= link_to "Planner", planner_path, class: "orange-text waves-effect waves-orange left" %></li>
       <li><a href="#features" class="orange-text head-link">Features</a></li>
       <li><a href="http://www.Ristormarkt.com"><img class="textShadow" style="height: 60px; top:2px" src="/planner/img/Logo Ristormarkt.png"></a></li>
     </ul>
@@ -24,27 +30,30 @@
 </nav>
 
 <ul class="right side-nav" id="mobile-demo">
-  <li><a href="#"><img class="textShadow" style="height: 50px; top:15px" src="/planner/img/logo.png"></a></li>
+  <li><a href="#"><img class="textShadow" style="height: 60px;" src="/planner/img/logo03.png"></a></li>
     <% if user_signed_in? %>
-    <li class="no-padding">
+    <li class="no-padding grey lighten-4">
       <ul class="collapsible collapsible-accordion">
         <li>
-          <a class="collapsible-header black-text"><%= current_user.name %><i class="right black-text fa fa-caret-down"></i></a>
-          <div class="collapsible-body">
+          <img class="circle z-depth-1 left" src="/planner/img/user1.png" style="height:40px; margin-top:10px"/>
+          <a class="collapsible-header black-text center"><%= current_user.name %>
+          <i class="right black-text fa fa-caret-down"></i></a>
+          <div class="collapsible-body grey lighten-4">
             <ul>
-              <li><%= link_to 'Profile', edit_user_registration_path, class: "black-text waves-effect waves-light" %></li>
+              <li><%= link_to 'Profile', profile_path, class: "orange-text waves-effect waves-orange" %></li>
+              <li><%= link_to 'Edit', edit_user_registration_path, class: "orange-text waves-effect waves-orange" %></li>
               <li class="divider"></li>
-              <li><%= link_to 'Log out', destroy_user_session_path, method: :delete, class: "black-text waves-effect waves-light"%></li>
+              <li><%= link_to 'Log out', destroy_user_session_path, method: :delete, class: "black-text waves-effect waves-orange"%></li>
             </ul>
           </div>
         </li>
       </ul>
     </li>
     <% else %>
-      <li><%= link_to 'Sign In', new_user_session_path, class: "orange-text waves-effect waves-light"%></li>
-      <li><%= link_to 'Sign Up', new_user_registration_path,  class: "orange-text waves-effect waves-light"%></li>
+      <li><%= link_to 'Sign In', new_user_session_path, class: "orange-text waves-effect waves-orange"%></li>
+      <li><%= link_to 'Sign Up', new_user_registration_path,  class: "orange-text waves-effect waves-orange"%></li>
     <% end %>
-    <li><%= link_to "Planner", planner_path, class: "orange-text waves-effect waves-light" %></li>
+    <li><%= link_to "Planner", planner_path, class: "orange-text waves-effect waves-orange" %></li>
     <li><a href="#features" class="orange-text head-link">Features</a></li>
     <li><a href="http://www.Ristormarkt.com"><img class="textShadow" style="height: 60px" src="/planner/img/Logo Ristormarkt.png"></a></li>
 </ul>

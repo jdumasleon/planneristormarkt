@@ -14,6 +14,18 @@
   height: 90px;
 }
 
+.borderAsset{
+  border: 0.1px solid #c8c8c8;
+}
+
+.side-nav li.liasset{
+  line-height: 0px;
+}
+
+.assetMenu{
+  margin-bottom: 0px;
+}
+
  .containerFooter{
     width: 100%;
     position: absolute;

@@ -5,6 +5,7 @@ Rails.application.routes.draw do
   get 'help'    => 'static_pages#help'
   get 'about'   => 'static_pages#about'
   get 'planner' => 'static_pages#planner'
+  get 'profile' => 'static_pages#profile'
 
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
