@@ -5,11 +5,11 @@
 
 @font-face {
   font-family: "shapes";
-  src: url("./shapes.eot");
-  src: url("./shapes.eot?#iefix") format("embedded-opentype"),
-       url("./shapes.woff") format("woff"),
-       url("./shapes.ttf") format("truetype"),
-       url("./shapes.svg#shapes") format("svg");
+  src: url(asset-path("./shapes.eot"));
+  src: url(asset-path("./shapes.eot?#iefix")) format("embedded-opentype"),
+       url(asset-path("./shapes.woff")) format("woff"),
+       url(asset-path("./shapes.ttf")) format("truetype"),
+       url(asset-path("./shapes.svg#shapes")) format("svg");
   font-weight: normal;
   font-style: normal;
 }
@@ -17,7 +17,7 @@
 @media screen and (-webkit-min-device-pixel-ratio:0) {
   @font-face {
     font-family: "shapes";
-    src: url("./shapes.svg#shapes") format("svg");
+    src: url(asset-path("./shapes.svg#shapes")) format("svg");
   }
 }
 
