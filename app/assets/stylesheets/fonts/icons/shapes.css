@@ -22,11 +22,11 @@
 }
 
 [class^="shapes-"]:before, [class*=" shapes-"]:before,
-[class^="shapes-"]:after, [class*=" shapes-"]:after {   
+[class^="shapes-"]:after, [class*=" shapes-"]:after {
   font-family: shapes;
-        font-size: 20px;
+        font-size: 60px;
 font-style: normal;
-margin-left: 20px;
+margin-left: 15px;
 }
 
 .shapes-circle:before { content: "\f100"; }

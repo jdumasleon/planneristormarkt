@@ -18,8 +18,12 @@
   border: 0.1px solid #c8c8c8;
 }
 
+.side-nav li.liShapes{
+  line-height: 70px;
+}
+
 .side-nav li.liasset{
-  line-height: 0px;
+  line-height: 50px;
 }
 
 .assetMenu{

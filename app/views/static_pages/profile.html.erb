@@ -1,18 +1,30 @@
 <% provide(:title, "Profile") %>
 <%= render "shared/nav1"%>
-<div class="row">
-  <div class="col s3 center teal" >
-    <img class="circle center z-depth-5" src="/planner/img/user1.png" alt="" />
+<br><br>
+<div class="row center">
+  <div class="col s3" style="border-right: 1px solid grey; height:530px">
+    <div class="row">
+      <img class="circle z-depth-3" src="/planner/img/user1.png" alt="" />
+    </div>
+    <div class="row offset-m1">
+      <span class="flow-text">Jose Luis Dumas Leon</span>
+      <p class=""><i class="fa fa-envelope-o orange-text"></i> Email: jdumasleon@gmail.com</p>
+      <p class=""><i class="fa fa-mobile orange-text fa-lg"></i> Telf: +(53)5-252-49-84</p>
+      <p class=""><i class="fa fa-fax orange-text"></i> Fax: +(53)5-252-49-84</p>
+      <p class=""><i class="fa fa-building-o orange-text"></i> Company: Mastro</p>
+      <p class=""><i class="fa fa-map-marker orange-text"></i> Address: Robert de Aguilo, #3</p>
+      <%= link_to ' Edit', edit_user_registration_path, class: "fa fa-pencil-square-o orange-text waves-effect waves-orange" %></li>
+    </div>
   </div>
 
-  <div class="col s9">
+  <div class="col s8" style=" margin-left:50px">
       <ul class="tabs">
-        <li class="tab col s3"><a class="orange-text" href="#test1">Working Proyects</a></li>
-        <li class="tab col s3"><a class="orange-text"href="#test2">Final Proyects</a></li>
+        <li class="tab col s3"><a class="orange-text" href="#test1">Proyects</a></li>
+        <li class="tab col s3"><a class="orange-text"href="#test2">Gallery</a></li>
         <li class="tab col s3"><a class="orange-text" href="#test3">Factures</a></li>
       </ul>
-    <div id="test1" class="col s12">Working Proyects</div>
-    <div id="test2" class="col s12">Final Proyects</div>
+    <div id="test1" class="col s12">Proyects</div>
+    <div id="test2" class="col s12">Gallery</div>
     <div id="test3" class="col s12">Factures</div>
   </div>
 </div>

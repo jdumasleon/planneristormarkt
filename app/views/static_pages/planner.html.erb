@@ -22,37 +22,80 @@
     </li>
     <% end %>
     <ul class="tabs">
-      <li class="tab"><a class="active" href="#build"><i class="flaticon-vector-1 orange-text"></i></a></li>
+      <li class="tab"><a class="active" href="#build2D"><i class="flaticon-vector-1 orange-text"></i></a></li>
       <li class="tab"><a href="#equipments"><i class="flaticon-oven orange-text"></i></a></li>
     </ul>
 
-    <div id="build" class="col s12">
-       Layout
+    <div id="build2D" class="col s12">
+      <ul>
+        <li class="liShapes">
+          <div class="row center assetMenu">
+            <div class="col s6 borderAsset">
+              <i class="left shapes-square orange-text"></i>
+            </div>
+            <div class="col s6 borderAsset">
+              <i class="left shapes-perfect-circle orange-text"></i>
+            </div>
+          </div>
+        </li>
+        <li class="liShapes">
+          <div class="row center assetMenu">
+            <div class="col s6 borderAsset">
+              <i class="left shapes-triangle-shape orange-text"></i>
+            </div>
+            <div class="col s6 borderAsset">
+              <i class="left shapes-octagon-outline-shape orange-text"></i>
+            </div>
+          </div>
+        </li>
+        <li class="liShapes">
+          <div class="row center assetMenu">
+            <div class="col s6 borderAsset">
+              <i class="left shapes-hexagon-geometrical-shape-outline orange-text"></i>
+            </div>
+            <div class="col s6 borderAsset">
+              <i class="left shapes-square orange-text"></i>
+            </div>
+          </div>
+        </li>
+      </ul>
     </div>
 
     <div id="equipments" class="col s12">
       <ul>
-       <li class="no-padding">
-         <ul class="collapsible collapsible-accordion">
-           <li class="bold"><a class="collapsible-header waves-effect waves-orange">Categorie3</a>
-             <div class="collapsible-body">
-               <ul>
-                 <% @equipments.each do |equipment| %>
-                 <li class="liasset">
-                   <div class="row center assetMenu">
-                     <div class="col s6 borderAsset">
-                       <div ondragend="addCollada('<%= equipment.collada_url%>')"> <img  src="<%= equipment.image_url%>" id="<%= equipment.code%>" style="height: 70%;width: 70%;" /></div>
+        <li style="padding:5px;">
+          <nav class="grey lighten-4" style="height:50px">
+            <div class="nav-wrapper">
+              <form>
+               <div class="input-field"  style="height:50px">
+                 <input id="search" type="search" required>
+                 <label for="search"><i class="fa fa-search orange-text"></i></label>
+               </div>
+             </form>
+           </div>
+          </nav>
+         </li>
+         <li class="no-padding">
+           <ul class="collapsible collapsible-accordion">
+             <li class="bold"><a class="collapsible-header waves-effect waves-orange">Categorie3</a>
+               <div class="collapsible-body">
+                 <ul>
+                   <% @equipments.each do |equipment| %>
+                   <li class="liasset">
+                     <div class="row center assetMenu">
+                       <div class="col s6 borderAsset">
+                         <div ondragend="addCollada('<%= equipment.collada_url%>')"> <img  src="<%= equipment.image_url%>" id="<%= equipment.code%>" style="height: 70%;width: 70%;" /></div>
+                       </div>
+                       <div class="col s6 borderAsset">
+                         <div ondragend="addCollada('<%= equipment.collada_url%>')"> <img  src="<%= equipment.image_url%>" id="<%= equipment.code%>" style="height: 70%;width: 70%;" /></div>
+                       </div>
                      </div>
-                     <div class="col s6 borderAsset">
-                       <div ondragend="addCollada('<%= equipment.collada_url%>')"> <img  src="<%= equipment.image_url%>" id="<%= equipment.code%>" style="height: 70%;width: 70%;" /></div>
-                     </div>
-                   </div>
-                 </li>
+                   </li>
 
-                 <% end %>
-               </ul>
-             </div>
-           </li>
+                   <% end %>
+                 </ul>
+               </div>
+             </li>
          </ul>
        </div>
   </ul>
