@@ -16,7 +16,19 @@ Bundler.require(*Rails.groups)
 
 module PlannerRistorMarkt
   class Application < Rails::Application
-    config.assets.precompile << /\.(?:svg|eot|woff|ttf|png|jpg)$/
+    config.serve_static_assets = true
+    config.assets.precompile += %w(*.png *.jpg *.jpeg *.gif,*.svg,*.eot,
+                                  "fontawesome-webfont.ttf",
+                                  "fontawesome-webfont.eot",
+                                  "fontawesome-webfont.svg",
+                                  "fontawesome-webfont.woff",
+                                  "shapes.ttf",
+                                  "shapes.woff",
+                                  "Flaticon.ttf",
+                                  "Flaticon.woff",
+                                  "RobotoRegular.ttf",
+                                  "RobotoRegular.woff",
+                                  "RobotoRegular.woff2")
     # Settings in config/environments/* take precedence over those specified here.
     # Application configuration should go into files in config/initializers
     # -- all .rb files in that directory are automatically loaded.
