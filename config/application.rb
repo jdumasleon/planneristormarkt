@@ -16,7 +16,7 @@ Bundler.require(*Rails.groups)
 
 module PlannerRistorMarkt
   class Application < Rails::Application
-    config.serve_static_assets = true
+    config.serve_static_files = true
     config.assets.precompile += %w(*.png *.jpg *.jpeg *.gif,*.svg,*.eot,
                                   "fontawesome-webfont.ttf",
                                   "fontawesome-webfont.eot",
