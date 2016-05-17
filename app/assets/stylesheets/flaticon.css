@@ -24,11 +24,38 @@
 [class^="flaticon-"]:before, [class*=" flaticon-"]:before,
 [class^="flaticon-"]:after, [class*=" flaticon-"]:after {
   font-family: Flaticon;
-        font-size: 35px;
+        font-size: 30px;
         margin-top: -10px;
         display: flex;
-font-style: normal;
-margin-left: 20px;
+        font-style: normal;
+        margin-left: 20px;
+}
+
+[class^="flaticon-lines"]:before, [class*=" flaticon-lines"]:before,
+[class^="flaticon-lines"]:after, [class*=" flaticon-lines"]:after {
+  font-size: 25px;
+  display: normal;
+  margin-top: 0px;
+  font-style: normal;
+  margin-left: 7px;
+}
+
+[class^="flaticon-vector-2"]:before, [class*="flaticon-vector-2"]:before,
+[class^="flaticon-vector-2"]:after, [class*="flaticon-vector-2"]:after {
+  font-size: 17px;
+  display: normal;
+  margin-top: -2px;
+  font-style: normal;
+  margin-left: 8px;
+}
+
+[class^="flaticon-two-seat-sofa"]:before, [class*="flaticon-two-seat-sofa"]:before,
+[class^="flaticon-two-seat-sofa"]:after, [class*="flaticon-two-seat-sofa"]:after {
+    font-size: 40px;
+    margin-top: -10px;
+    display: flex;
+    font-style: normal;
+    margin-left: 20px;
 }
 
 .flaticon-art-1:before { content: "\f100"; }

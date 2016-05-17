@@ -2,7 +2,7 @@
 <nav class="white">
   <div class="nav-wrapper container">
     <div class="container left">
-      <a id="logo-container" href="/" class="brand-logo">
+      <a id="logo-container" class="brand-logo">
         <img class="textShadow" style="height: 60px;" src="/planner/img/logo03.png">
       </a>
     </div>
@@ -11,7 +11,7 @@
     <ul class="right hide-on-med-and-down">
       <% if user_signed_in? %>
         <li><img class="circle z-depth-1  " src="/planner/img/user1.png" alt="" style="height:40px; margin-top:10px" /></li>
-        <li><a class="black-text"><%= current_user.name %><i class="fa fa-caret-down right dropdown-button black-text waves-orange" href="#!" data-activates="user"></i></a></li>
+        <li><a class="grey-text"><%= current_user.name %><i class="fa fa-caret-down right dropdown-button grey-text waves-orange" href="#!" data-activates="user"></i></a></li>
         <ul id='user' class='dropdown-content'>
           <li><%= link_to 'Profile', profile_path, class: "orange-text waves-effect waves-orange" %></li>
           <li><%= link_to 'Edit', edit_user_registration_path, class: "orange-text waves-effect waves-orange" %></li>

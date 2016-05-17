@@ -11,8 +11,14 @@
 // about supported directives.
 //
 //= require jquery
-//= require three.min.js
 //= require jquery_ujs
+//= require three
+//= require materialize
+//= require init
+//= require zxcvbn
 //= require turbolinks
 //= require global
+//= require planner3D
+//= require items
+//= require example
 //= require_tree
