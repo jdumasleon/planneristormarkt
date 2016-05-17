@@ -163,7 +163,7 @@ $(document).ready(function() {
   ]
 
   var count = 0;
-  var html =  "";
+  var html =  "<p class='grey-text'>Aditional Assets</p>";
   var itemsDiv = $("#items-wrapper")
   for (var i = 0; i < items.length; i++) {
     var item = items[i];
@@ -171,14 +171,14 @@ $(document).ready(function() {
         html += '<li class="liasset"><div class="row center assetMenu">'
     }
 
-    html += '<div class="col s4 borderAsset">' +
+    html += '<div class="col s4 borderAsset waves-effect waves-orange">' +
                '<a class="thumbnail add-item" model-name="' +
                item.name +
                '" model-url="' +
                item.model +
                '" model-type="' +
                item.type +
-               '"><img style="height: 90%" src="' +
+               '"><img style="height: 100%;margin-left: -42px;width: 510%" src="' +
                item.image +
                '" alt="Add Item"></a></div>';
 
