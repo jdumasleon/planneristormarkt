@@ -515,7 +515,7 @@
       floorplannerElement: 'floorplanner-canvas',
       threeElement: '#viewer',
       threeCanvasElement: 'three-canvas',
-      textureDir: "assets/models/textures/",
+      textureDir: "planner/models/textures/",
       widget: false
     }
     var planner3D = new Planner3D(opts);
