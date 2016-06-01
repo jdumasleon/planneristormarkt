@@ -44953,7 +44953,8 @@ var FloorplannerView = function(floorplan, viewmodel, canvas) {
     var realFeet = ((cm*0.393700) / 12);
     var feet = Math.floor(realFeet);
     var inches = Math.round((realFeet - feet) * 12);
-    return feet + "'" + inches + '"';
+    //return feet + "'" + inches + '"';
+		return Math.trunc(cm*10)/1000 + " m";
   }
 
   function drawEdgeLabel(edge) {
@@ -47165,6 +47166,7 @@ var Scene = function(model, textureDir) {
       textureDir
     );
   }
+
 }
 
 module.exports = Scene;
@@ -47874,7 +47876,7 @@ var ThreeControls = function (object, domElement) {
 	this.zoomSpeed = 1.0;
 	// Limits to how far you can dolly in and out
 	this.minDistance = 0;
-	this.maxDistance = 1500; //Infinity;
+	this.maxDistance = 2500; //Infinity;
 
 	// Set to true to disable this control
 	this.noRotate = false;

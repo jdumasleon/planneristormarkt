@@ -1,0 +1,116 @@
+0 info it worked if it ends with ok
+1 verbose cli [ '/usr/bin/nodejs',
+1 verbose cli   '/usr/local/bin/npm',
+1 verbose cli   'install',
+1 verbose cli   'three-obj' ]
+2 info using npm@3.8.2
+3 info using node@v4.2.6
+4 verbose config Skipping project config: /home/jo/.npmrc. (matches userconfig)
+5 silly loadCurrentTree Starting
+6 silly install loadCurrentTree
+7 silly install readLocalPackageData
+8 silly fetchPackageMetaData three-obj
+9 silly fetchNamedPackageData three-obj
+10 silly mapToRegistry name three-obj
+11 silly mapToRegistry using default registry
+12 silly mapToRegistry registry https://registry.npmjs.org/
+13 silly mapToRegistry uri https://registry.npmjs.org/three-obj
+14 verbose request uri https://registry.npmjs.org/three-obj
+15 verbose request no auth needed
+16 info attempt registry request try #1 at 1:29:51 PM
+17 verbose request id a0e2508e6abdaa79
+18 verbose etag "B57Y2UWID49YV7C89M7KSSM1A"
+19 http request GET https://registry.npmjs.org/three-obj
+20 http 304 https://registry.npmjs.org/three-obj
+21 verbose headers { date: 'Thu, 19 May 2016 17:29:52 GMT',
+21 verbose headers   via: '1.1 varnish',
+21 verbose headers   'cache-control': 'max-age=300',
+21 verbose headers   etag: '"B57Y2UWID49YV7C89M7KSSM1A"',
+21 verbose headers   age: '0',
+21 verbose headers   connection: 'keep-alive',
+21 verbose headers   'x-served-by': 'cache-iad2141-IAD',
+21 verbose headers   'x-cache': 'MISS',
+21 verbose headers   'x-cache-hits': '0',
+21 verbose headers   'x-timer': 'S1463678992.060547,VS0,VE25',
+21 verbose headers   vary: 'Accept-Encoding' }
+22 silly get cb [ 304,
+22 silly get   { date: 'Thu, 19 May 2016 17:29:52 GMT',
+22 silly get     via: '1.1 varnish',
+22 silly get     'cache-control': 'max-age=300',
+22 silly get     etag: '"B57Y2UWID49YV7C89M7KSSM1A"',
+22 silly get     age: '0',
+22 silly get     connection: 'keep-alive',
+22 silly get     'x-served-by': 'cache-iad2141-IAD',
+22 silly get     'x-cache': 'MISS',
+22 silly get     'x-cache-hits': '0',
+22 silly get     'x-timer': 'S1463678992.060547,VS0,VE25',
+22 silly get     vary: 'Accept-Encoding' } ]
+23 verbose etag https://registry.npmjs.org/three-obj from cache
+24 verbose get saving three-obj to /home/jo/.npm/registry.npmjs.org/three-obj/.cache.json
+25 verbose correctMkdir /home/jo/.npm correctMkdir not in flight; initializing
+26 silly install normalizeTree
+27 silly loadCurrentTree Finishing
+28 silly loadIdealTree Starting
+29 silly install loadIdealTree
+30 silly cloneCurrentTree Starting
+31 silly install cloneCurrentTreeToIdealTree
+32 silly cloneCurrentTree Finishing
+33 silly loadShrinkwrap Starting
+34 silly install loadShrinkwrap
+35 silly loadShrinkwrap Finishing
+36 silly loadAllDepsIntoIdealTree Starting
+37 silly install loadAllDepsIntoIdealTree
+38 silly resolveWithNewModule three-obj@0.6.2 checking installable status
+39 silly cache add args [ 'three-obj', null ]
+40 verbose cache add spec three-obj
+41 silly cache add parsed spec Result {
+41 silly cache add   raw: 'three-obj',
+41 silly cache add   scope: null,
+41 silly cache add   name: 'three-obj',
+41 silly cache add   rawSpec: '',
+41 silly cache add   spec: 'latest',
+41 silly cache add   type: 'tag' }
+42 silly addNamed three-obj@latest
+43 verbose addNamed "latest" is being treated as a dist-tag for three-obj
+44 info addNameTag [ 'three-obj', 'latest' ]
+45 silly mapToRegistry name three-obj
+46 silly mapToRegistry using default registry
+47 silly mapToRegistry registry https://registry.npmjs.org/
+48 silly mapToRegistry uri https://registry.npmjs.org/three-obj
+49 verbose addNameTag registry:https://registry.npmjs.org/three-obj not in flight; fetching
+50 verbose get https://registry.npmjs.org/three-obj not expired, no request
+51 silly addNameTag next cb for three-obj with tag latest
+52 silly addNamed three-obj@0.6.2
+53 verbose addNamed "0.6.2" is a plain semver version for three-obj
+54 silly mapToRegistry name three-obj
+55 silly mapToRegistry using default registry
+56 silly mapToRegistry registry https://registry.npmjs.org/
+57 silly mapToRegistry uri https://registry.npmjs.org/three-obj
+58 verbose addRemoteTarball https://registry.npmjs.org/three-obj/-/three-obj-0.6.2.tgz not in flight; adding
+59 verbose addRemoteTarball [ 'https://registry.npmjs.org/three-obj/-/three-obj-0.6.2.tgz',
+59 verbose addRemoteTarball   'e101560d8249875063abc092edf054bb90e86d6e' ]
+60 info retry fetch attempt 1 at 1:29:52 PM
+61 info attempt registry request try #1 at 1:29:52 PM
+62 http fetch GET https://registry.npmjs.org/three-obj/-/three-obj-0.6.2.tgz
+63 http fetch 200 https://registry.npmjs.org/three-obj/-/three-obj-0.6.2.tgz
+64 warn retry will retry, error on last attempt: Error: ENOSPC: no space left on device, write
+65 verbose stack TypeError: tarball.destroy is not a function
+65 verbose stack     at WriteStreamAtomic.<anonymous> (/usr/local/lib/node_modules/npm/lib/cache/add-remote-tarball.js:97:15)
+65 verbose stack     at emitOne (events.js:82:20)
+65 verbose stack     at WriteStreamAtomic.emit (events.js:169:7)
+65 verbose stack     at WriteStreamAtomic.emit (/usr/local/lib/node_modules/npm/node_modules/fs-write-stream-atomic/index.js:60:34)
+65 verbose stack     at WriteStream.<anonymous> (/usr/local/lib/node_modules/npm/node_modules/fs-write-stream-atomic/index.js:113:17)
+65 verbose stack     at WriteStream.g (events.js:260:16)
+65 verbose stack     at emitOne (events.js:77:13)
+65 verbose stack     at WriteStream.emit (events.js:169:7)
+65 verbose stack     at onwriteError (_stream_writable.js:304:10)
+65 verbose stack     at onwrite (_stream_writable.js:322:5)
+66 verbose cwd /home/jo/PlannerRistorMarkt
+67 error Linux 3.19.0-49-generic
+68 error argv "/usr/bin/nodejs" "/usr/local/bin/npm" "install" "three-obj"
+69 error node v4.2.6
+70 error npm  v3.8.2
+71 error tarball.destroy is not a function
+72 error If you need help, you may report this error at:
+72 error     <https://github.com/npm/npm/issues>
+73 verbose exit [ 1, true ]

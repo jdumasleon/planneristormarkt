@@ -110,7 +110,7 @@
     }
 
     function cmToIn(cm) {
-      return cm / 2.54;
+      return (cm / 2.54) / 100 ;
     }
 
     function inToCm(inches) {
