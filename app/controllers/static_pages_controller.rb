@@ -8,7 +8,4 @@ class StaticPagesController < ApplicationController
   def about
   end
 
-  def planner
-    @equipments=Equipment.all
-  end
 end

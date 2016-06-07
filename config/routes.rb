@@ -4,7 +4,7 @@ Rails.application.routes.draw do
   root             'static_pages#home'
   get 'help'    => 'static_pages#help'
   get 'about'   => 'static_pages#about'
-  get 'planner' => 'static_pages#planner'
+  get 'planner' => 'planner#planner'
   get 'profile' => 'static_pages#profile'
 
   # The priority is based upon order of creation: first created -> highest priority.

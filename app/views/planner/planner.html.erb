@@ -1,0 +1,313 @@
+<% provide(:title, "Planner") %>
+
+<%= render "shared/nav2"%>
+<div class="row" style="margin-bottom:0px; background-color: rgba(250, 250, 250, 0.52);">
+  <div class="col s3">
+    <ul class="side-nav fixed" id="mobile-demo">
+      <li class="logo" style="height: 120px"><a class="brand-logo" style="height: 120px"><img class="textShadow" style="height: 80px; top:15px; margin-left: 40px;" src="/planner/img/logo03.png"></a></li>
+      <ul class="tabs">
+        <li id="floorplan_tab" class="tab tooltipped" data-position="top" data-delay="50" data-tooltip="Build"><a href="#floorplan"><i class="flaticon-vector-1 orange-text"></i></a></li>
+        <li id="design_tab" class="tab tooltipped" data-position="top" data-delay="50" data-tooltip="Kitchen Asset"><a href="#design"><i class="flaticon-oven orange-text"></i></a></li>
+        <li class="tab tooltipped" data-position="top" data-delay="50" data-tooltip="Adicional Fiurniture Assets"><a class="active" href="#items"><i class="flaticon-two-seat-sofa orange-text"></i></a></li>
+      </ul>
+
+      <!-- tab floorplan (Design foolplan) -->
+      <div id="floorplan" class="col s12">
+        <ul>
+          <p class="grey-text">Basic Forms Walls</p>
+          <!--<li class="liShapes">
+            <div class="row center assetMenu">
+              <div class="col s4 borderAsset waves-effect waves-orange">
+                <i class="left shapes-square orange-text tooltipped" data-position="top" data-delay="50" data-tooltip="Draw Rect"></i>
+              </div>
+              <div class="col s4 borderAsset waves-effect waves-orange">
+                <i class="left shapes-perfect-circle orange-text tooltipped" data-position="top" data-delay="50" data-tooltip="Draw Circle"></i>
+              </div>
+              <div class="col s4 borderAsset waves-effect waves-orange">
+                <i class="left shapes-triangle-shape orange-text tooltipped" data-position="bottom" data-delay="50" data-tooltip="Draw Triangle"></i>
+              </div>
+            </div>
+          </li>
+          <li class="liShapes">
+            <div class="row center assetMenu">
+              <div class="col s4 borderAsset waves-effect waves-orange">
+                <i class="left shapes-octagon-outline-shape orange-text tooltipped" data-position="bottom" data-delay="50" data-tooltip="Draw Polygon"></i>
+              </div>
+              <div class="col s4 borderAsset waves-effect waves-orange">
+                <i class="left shapes-hexagon-geometrical-shape-outline orange-text tooltipped" data-position="bottom" data-delay="50" data-tooltip="Draw Polygon"></i>
+              </div>
+            </div>
+          </li> -->
+
+        </ul>
+      </div>
+
+      <!-- tab Design (Assets Mastro) -->
+      <div id="design" class="col s12">
+        <ul>
+        <li style="padding:5px;">
+          <nav class="grey lighten-4" style="height:50px">
+            <div class="nav-wrapper">
+              <form>
+               <div class="input-field"  style="height:50px">
+                 <input id="search" type="search" required>
+                 <label for="search"><i class="fa fa-search orange-text" style="margin-top:-15px"></i></label>
+               </div>
+             </form>
+           </div>
+          </nav>
+         </li>
+         <!-- <li class="no-padding">
+           <ul class="collapsible collapsible-accordion">
+             <li class="bold"><a class="collapsible-header waves-effect waves-orange">Categorie3</a>
+               <div class="collapsible-body">
+                 <ul>
+                   <% @equipments.each do |equipment| %>
+                   <li class="liasset">
+                     <div class="row center assetMenu">
+                       <div class="col s4 borderAsset">
+                         <div ondragend="addCollada('<%= equipment.collada_url%>')"> <img  src="<%= equipment.image_url%>" id="<%= equipment.code%>" style="height: 70%;width: 70%;" /></div>
+                       </div>
+                       <div class="col s4 borderAsset">
+                         <div ondragend="addCollada('<%= equipment.collada_url%>')"> <img  src="<%= equipment.image_url%>" id="<%= equipment.code%>" style="height: 70%;width: 70%;" /></div>
+                       </div>
+                       <div class="col s4 borderAsset">
+                         <div ondragend="addCollada('<%= equipment.collada_url%>')"> <img  src="<%= equipment.image_url%>" id="<%= equipment.code%>" style="height: 70%;width: 70%;" /></div>
+                       </div>
+                     </div>
+                   </li>
+                   <% end %>
+                 </ul>
+               </div>
+             </li>
+         </ul> -->
+        </ul>
+      </div>
+
+      <!-- tab items (Shop) -->
+      <div id="items" class="col s12">
+        <!-- Add Items -->
+        <div id="add-items">
+         <div class="row" id="items-wrapper">
+
+                <!-- Items added here by items.js -->
+         </div>
+        </div>
+      </div>
+    </ul>
+  </div>
+</div>
+
+  <div class="main">
+
+    <!-- 3D Viewer -->
+    <div id="viewer">
+       <div id="main-controls">
+         <button id="new" class="btn btn-floating flaticon-vector-2 white-text waves-effect waves-orange green left tooltipped" data-position="top" data-delay="50" data-tooltip="New Design"></button>
+         <button id="saveFile" class="btn btn-floating fa fa-floppy-o white-text waves-effect waves-orange blue left tooltipped" data-position="top" data-delay="50" data-tooltip="Save Design"></button>
+         <div class="file-field input-field">
+           <div id="loadFile1" class="btn btn-floating fa fa-folder-open-o white-text waves-effect waves-orange orange left  tooltipped" data-position="top" data-delay="50" data-tooltip="Load Design">
+             <input id="loadFile" type="file">
+           </div>
+
+         </div>
+       </div>
+       <div id="camera-controls">
+         <button id="move-right" class="btn fa fa-arrow-left orange-text waves-effect waves-orange white left"></button>
+         <button id="move-up" class="btn fa fa-arrow-up orange-text waves-effect waves-orange white left"></button>
+         <button id="move-down" class="btn fa fa-arrow-down orange-text waves-effect waves-orange white left"></button>
+         <button id="move-left" class="btn fa fa-arrow-right orange-text waves-effect waves-orange white left"></button>
+
+         <span>&nbsp;</span>
+
+         <button id="zoom-in" class="btn btn-floating fa fa-search-plus orange-text waves-effect waves-orange white left"></button>
+         <button id="reset-view" class="btn btn-floating fa fa-home white-text waves-effect waves-orange grey left"></button>
+         <button id="zoom-out" class="btn btn-floating fa fa-search-minus orange-text waves-effect waves-orange white left"></button>
+     </div>
+
+     <div id="loading-modal">
+       <div class="preloader-wrapper big active" style="left:60%;top:45%">
+         <div class="spinner-layer spinner-blue">
+           <div class="circle-clipper left">
+             <div class="circle"></div>
+           </div><div class="gap-patch">
+             <div class="circle"></div>
+           </div><div class="circle-clipper right">
+             <div class="circle"></div>
+           </div>
+         </div>
+
+         <div class="spinner-layer spinner-red">
+           <div class="circle-clipper left">
+             <div class="circle"></div>
+           </div><div class="gap-patch">
+             <div class="circle"></div>
+           </div><div class="circle-clipper right">
+             <div class="circle"></div>
+           </div>
+         </div>
+
+         <div class="spinner-layer spinner-yellow">
+           <div class="circle-clipper left">
+             <div class="circle"></div>
+           </div><div class="gap-patch">
+             <div class="circle"></div>
+           </div><div class="circle-clipper right">
+             <div class="circle"></div>
+           </div>
+         </div>
+
+         <div class="spinner-layer spinner-green">
+           <div class="circle-clipper left">
+             <div class="circle"></div>
+           </div><div class="gap-patch">
+             <div class="circle"></div>
+           </div><div class="circle-clipper right">
+             <div class="circle"></div>
+           </div>
+         </div>
+       </div>
+     </div>
+    </div>
+
+    <!-- 2D Floorplanner -->
+    <div id="floorplanner">
+      <canvas id="floorplanner-canvas"></canvas>
+      <div id="floorplanner-controls" class="container">
+        <button id="move" class="btn btn-floating fa fa-arrows orange-text waves-effect waves-orange white left tooltipped" data-position="bottom" data-delay="50" data-tooltip="Move"></button>
+        <button id="draw" class="btn btn-floating flaticon-lines orange-text waves-effect waves-orange white left tooltipped" data-position="bottom" data-delay="50" data-tooltip="Free Draw"></button>
+        <button id="delete" class="btn btn-floating fa fa-times orange-text waves-effect waves-orange white left  tooltipped" data-position="bottom" data-delay="50" data-tooltip="Delete Wall"></button>
+      </div>
+      <div id="draw-walls-hint">
+        Press the "Esc" key to stop drawing walls
+      </div>
+    </div>
+
+    <!-- Context Menu -->
+    <div id="context-menu" style="display:none; position: absolute;top: 10%;right:0.5%;">
+
+      <div class="card">
+       <div class="card-image waves-effect waves-block waves-light">
+         <img id="context-menu-img" class="activator">
+       </div>
+       <div class="card-content">
+         <span id="context-menu-name-outside" class="card-title activator grey-text text-darken-4"></span>
+         <div class="row" style="margin-bottom:0px">
+           <div class="col s6" style="padding:0px">
+             <p class="left flow-text">
+               Price:
+             </p>
+           </div>
+           <div class="col s6" style="padding:0px">
+             <p class="right flow-text orange-text">
+               0$
+             </p>
+           </div>
+         </div>
+       </div>
+       <div class="card-reveal">
+         <span id="context-menu-name-inside" class="card-title grey-text text-darken-4"></span>
+         <p>Here is some more information about this product that is only revealed once clicked on.</p>
+       </div>
+       <div class="card-action">
+         <div class="row" style="margin-bottom:0px">
+           <div class="col s9" style="padding:0px">
+             <p class="left" style="margin-top:5px">
+               <input type="checkbox" id="fixed" />
+               <label class="orange-text" for="fixed">Lock in Place</label>
+             </p>
+           </div>
+            <div class="col s3">
+              <button class="tooltipped btn-floating red waves-effect waves-orange fa fa-trash-o" id="context-menu-delete" data-position="bottom" data-delay="50" data-tooltip="Delete Item"></button>
+            </div>
+         </div>
+       </div>
+     </div>
+    <!-- <div style="margin: 0 20px">
+        <span id="context-menu-name" class="lead"></span>
+        <br /><br />
+        <button class="btn btn-block btn-danger" id="context-menu-delete">
+          <span class="glyphicon glyphicon-trash"></span>
+             Delete Item
+        </button>
+        <br />
+        <div class="panel panel-default">
+          <div class="panel-heading">Adjust Size</div>
+          <div class="panel-body" style="color: #333333">
+            <div class="form form-horizontal" class="lead">
+              <div class="form-group">
+                <label class="col-sm-5 control-label">
+                  Width
+                </label>
+                <div class="col-sm-6">
+                  <input type="number" class="form-control" id="item-width">
+                </div>
+              </div>
+              <div class="form-group">
+                <label class="col-sm-5 control-label">
+                  Depth
+                </label>
+                <div class="col-sm-6">
+                  <input type="number" class="form-control" id="item-depth">
+                </div>
+              </div>
+              <div class="form-group">
+                <label class="col-sm-5 control-label">
+                  Height
+                </label>
+                <div class="col-sm-6">
+                  <input type="number" class="form-control" id="item-height">
+                </div>
+              </div>
+            </div>
+            <small><span class="text-muted">Measurements in inches.</span></small>
+           </div>
+         </div>
+
+         <label><input type="checkbox" id="fixed" /> Lock in place</label>
+         <br /><br />
+       </div>-->
+    </div>
+
+    <!-- Floor textures -->
+    <div id="floorTexturesDiv">
+         <div class="">Adjust Floor</div>
+         <div class="" style="color: #333333">
+           <div style="padding: 3px">
+             <a href="#" class="thumbnail texture-select-thumbnail" texture-url="assets/rooms/textures/light_fine_wood.jpg" texture-stretch="false" texture-scale="300">
+               <img alt="Thumbnail light fine wood" src="assets/rooms/thumbnails/thumbnail_light_fine_wood.jpg" style="width:70%"/>
+             </a>
+           </div>
+           <div style="padding: 3px">
+             <a href="#" class="thumbnail texture-select-thumbnail" texture-url="assets/rooms/textures/hardwood.png" texture-stretch="false" texture-scale="300">
+               <img alt="Thumbnail light fine wood" src="assets/rooms/thumbnails/hardwood.png" style="width:70%"/>
+             </a>
+           </div>
+         </div>
+    </div>
+
+    <!-- Wall Textures -->
+    <div id="wallTextures">
+       <div class="panel panel-default">
+         <div class="panel-heading">Adjust Wall</div>
+         <div class="panel-body" style="color: #333333">
+             <div style="padding: 3px">
+               <a href="#" class="thumbnail texture-select-thumbnail" texture-url="assets/rooms/textures/marbletiles.jpg" texture-stretch="false" texture-scale="300">
+                 <img class="texturesFloor" alt="Thumbnail marbletiles" src="assets/rooms/thumbnails/thumbnail_marbletiles.jpg" style="width:70%"/>
+               </a>
+             </div>
+             <div style="padding: 3px">
+               <a href="#" class="thumbnail texture-select-thumbnail" texture-url="assets/rooms/textures/wallmap_yellow.png" texture-stretch="true" texture-scale="">
+                 <img class="texturesFloor" alt="Thumbnail wallmap yellow" src="assets/rooms/thumbnails/thumbnail_wallmap_yellow.png" style="width:70%"/>
+               </a>
+             </div>
+             <div style="padding: 3px">
+               <a href="#" class="thumbnail texture-select-thumbnail" texture-url="assets/rooms/textures/light_brick.jpg" texture-stretch="false" texture-scale="100">
+                 <img class="texturesFloor" alt="Thumbnail light brick" src="assets/rooms/thumbnails/thumbnail_light_brick.jpg" style="width:70%"/>
+               </a>
+             </div>
+         </div>
+       </div>
+     </div>
+
+  </div>

@@ -5,6 +5,28 @@
  *
  * Made By MaterializeCSS.com
  */
+
+ #floorTexturesDiv{
+   display: none;
+    position: absolute;
+    top: 10%;
+    right: 0%;
+    width: 10%;
+ }
+
+ #wallTextures{
+   display: none;
+   position: absolute;
+   top: 10%;
+   right: 0%;
+   width: 10%;
+ }
+
+ .texturesFloor{
+   width: 40%;
+   height: 40%;
+ }
+
  nav ul a,
  nav .brand-logo {
    color: white;
@@ -141,7 +163,7 @@
  .textShadow{
 
    position: absolute;
- -webkit-box-sizing: content-box;
+ -webkit-box-sizing: contsetAttributeent-box;
   -moz-box-sizing: content-box;
   box-sizing: content-box;
   border: none;
@@ -338,14 +360,14 @@
  }
 
  #move-left{
-   margin-left: 5px;
    margin-top: 15px;
-   margin-right: 3px;
+   margin-left: -17px;
  }
 
  #move-right{
-   margin-top: 13px;
-   margin-left: -18px;
+   margin-left: 5px;
+   margin-top: 15px;
+   margin-right: 3px;
  }
 
 /*

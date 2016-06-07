@@ -1,7 +1,7 @@
 (function($){
   $(function(){
 
-    $('.materialboxed').materialbox();
+    //$('.materialboxed').materialbox();
     $('.parallax').parallax();
     $('.button-collapse').sideNav();
 
@@ -63,6 +63,16 @@
         alignment: 'left' // Displays dropdown with edge aligned to the left of button
       }
     );
+
+    function onloadNotifications() {
+      var alert = document.getElementsByClassName("alert");
+      var result = "";
+      if (alert.length != 0 && alert != undefined) {
+        result += alert[0].innerHTML;
+        Materialize.toast(result, 6500, 'rounded');
+      }
+    }
+    window.onload = onloadNotifications;
 
 
   }); // end of document ready

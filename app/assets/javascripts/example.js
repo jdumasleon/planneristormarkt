@@ -120,7 +120,19 @@
     function itemSelected(item) {
       selectedItem = item;
 
-      $("#context-menu-name").text(item.metadata.itemName);
+      $("#context-menu-name-outside").text(item.metadata.itemName);
+      var i = document.createElement("i");
+      i.className = "fa fa-angle-up right orange-text";
+      i.style.marginTop = "5%";
+      $("#context-menu-name-outside")[0].appendChild(i);
+
+      $("#context-menu-name-inside").text(item.metadata.itemName);
+      var i = document.createElement("i");
+      i.className = "fa fa-times right orange-text";
+      i.style.marginTop = "1%";
+      $("#context-menu-name-inside")[0].appendChild(i);
+
+      $("#context-menu-img")[0].src = item.metadata.itemImage;
 
       $("#item-width").val(cmToIn(selectedItem.getWidth()).toFixed(0));
       $("#item-height").val(cmToIn(selectedItem.getHeight()).toFixed(0));
@@ -326,19 +338,28 @@
 
     // TODO: this doesn't really belong here
     function initItems() {
-      $("#add-items").find(".add-item").mousedown(function(e) {
-        var modelUrl = $(this).attr("model-url");
-        var itemType = parseInt($(this).attr("model-type"));
-        var metadata = {
-          itemName: $(this).attr("model-name"),
-          resizable: true,
-          modelUrl: modelUrl,
-          itemType: itemType
-        }
+     $("#add-items").find(".add-item").mousedown(function(e) {
+       var filetype = $(this).attr("file-type");
+       var modelUrl = $(this).attr("model-url");
+       var itemType = parseInt($(this).attr("model-type"));
+       var metadata = {
+         itemName: $(this).attr("model-name"),
+         itemImage: this.firstChild.src,
+         resizable: true,
+         filetype: filetype,
+         modelUrl: modelUrl,
+         itemType: itemType
+       }
 
-        planner3D.model.scene.addItem(itemType, modelUrl, metadata);
-        setCurrentState(scope.states.DEFAULT);
-      });
+       if (filetype == "dae") {
+         planner3D.model.scene.addColladaItem(itemType, modelUrl, metadata);
+       }
+       else {
+         planner3D.model.scene.addItem(itemType, modelUrl, metadata);
+       }
+
+       setCurrentState(scope.states.DEFAULT);
+     });
     }
 
     init();
@@ -518,15 +539,18 @@
       textureDir: "planner/models/textures/",
       widget: false
     }
-    var planner3D = new Planner3D(opts);
+    if(document.getElementsByTagName("title")[0].innerHTML == "Planner | PlannerRistorMarkt"){
+      var planner3D = new Planner3D(opts);
 
-    var modalEffects = new ModalEffects(planner3D);
-    var viewerFloorplanner = new ViewerFloorplanner(planner3D);
-    var contextMenu = new ContextMenu(planner3D);
-    var sideMenu = new SideMenu(planner3D, viewerFloorplanner, modalEffects);
-    var textureSelector = new TextureSelector(planner3D, sideMenu);
-    var cameraButtons = new CameraButtons(planner3D);
-    mainControls(planner3D);
+      var modalEffects = new ModalEffects(planner3D);
+      var viewerFloorplanner = new ViewerFloorplanner(planner3D);
+      var contextMenu = new ContextMenu(planner3D);
+      var sideMenu = new SideMenu(planner3D, viewerFloorplanner, modalEffects);
+      var textureSelector = new TextureSelector(planner3D, sideMenu);
+      var cameraButtons = new CameraButtons(planner3D);
+      mainControls(planner3D);
+    }
+
 
     // This serialization format needs work
     // Load a simple rectangle room

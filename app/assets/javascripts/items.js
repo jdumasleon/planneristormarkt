@@ -3,55 +3,85 @@
 $(document).ready(function() {
   var items = [
     {
-       "name" : "AJA0001",
-       "image" : "planner/models/thumbnails/tests/AJA0001.jpg",
-       "model" : "planner/models/js/tests/AJA0001.js",
+       "name" : "CCZ0018",
+       "filetype" : "js",
+       "image" : "planner/models/thumbnails/assets/CCZ0018.jpg",
+       "model" : "planner/models/js/assets/CCZ0018.js",
        "type" : "1"
-     },
-     {
-        "name" : "BGB0001",
-        "image" : "planner/models/thumbnails/tests/BGB0001.jpg",
-        "model" : "planner/models/js/tests/BGB0001.js",
-        "type" : "1"
-      },
-      {
-         "name" : "BHZ0001",
-         "image" : "planner/models/thumbnails/tests/BHZ0001.jpg",
-         "model" : "planner/models/js/tests/BHZ0001.js",
-         "type" : "1"
-       },
-       {
-          "name" : "VS7080GRL",
-          "image" : "planner/models/thumbnails/tests/VS7080GRL.jpg",
-          "model" : "planner/models/js/tests/VS7080GRL.js",
-          "type" : "1"
-        },
-        {
-           "name" : "BNC0003",
-           "image" : "planner/models/thumbnails/tests/BNC0003.jpg",
-           "model" : "planner/models/js/tests/BNC0003.js",
-           "type" : "1"
-         },
-         {
-            "name" : "VS7080FRE17X",
-            "image" : "planner/models/thumbnails/tests/VS7080FRE17X.jpg",
-            "model" : "planner/models/js/tests/VS7080FRE17X.js",
-            "type" : "1"
-          },
-   {
+    },
+    {
+       "name" : "EFA0002",
+       "filetype" : "js",
+       "image" : "planner/models/thumbnails/assets/EFA0002.jpg",
+       "model" : "planner/models/js/assets/EFA0002.js",
+       "type" : "1"
+    },
+    {
+       "name" : "VS7080CFG",
+       "filetype" : "js",
+       "image" : "planner/models/thumbnails/assets/VS7080CFG.jpg",
+       "model" : "planner/models/js/assets/VS7080CFG.js",
+       "type" : "1"
+    },
+    {
+      "name" : "HCD0008",
+      "filetype" : "js",
+      "image" : "planner/models/thumbnails/assets/HCD0008.jpg",
+      "model" : "planner/models/js/assets/HCD0008.js",
+      "type" : "1"
+    },
+    {
+      "name" : "GDZ0018",
+      "filetype" : "js",
+      "image" : "planner/models/thumbnails/assets/GDZ0018.jpg",
+      "model" : "planner/models/js/assets/GDZ0018.js",
+      "type" : "2"
+    },
+    {
+      "name" : "GLB0037",
+      "filetype" : "js",
+      "image" : "planner/models/thumbnails/assets/GLB0037.jpg",
+      "model" : "planner/models/js/assets/GLB0037.js",
+      "type" : "1"
+    },
+    {
+      "name" : "GLA0017",
+      "filetype" : "js",
+      "image" : "planner/models/thumbnails/assets/GLA0017.jpg",
+      "model" : "planner/models/js/assets/GLA0017.js",
+      "type" : "1"
+    },
+    {
+      "name" : "CBD0014",
+      "filetype" : "js",
+      "image" : "planner/models/thumbnails/assets/CBD0014.jpg",
+      "model" : "planner/models/js/assets/CBD0014.js",
+      "type" : "1"
+    },
+    {
+      "name" : "BNC0017",
+      "filetype" : "js",
+      "image" : "planner/models/thumbnails/assets/BNC0017.jpg",
+      "model" : "planner/models/js/assets/BNC0017.js",
+      "type" : "1"
+    },
+    {
       "name" : "Closed Door",
+      "filetype" : "js",
       "image" : "planner/models/thumbnails/thumbnail_Screen_Shot_2014-10-27_at_8.04.12_PM.png",
       "model" : "planner/models/js/closed-door28x80_baked.js",
       "type" : "7"
     },
     {
       "name" : "Open Door",
+      "filetype" : "js",
       "image" : "planner/models/thumbnails/thumbnail_Screen_Shot_2014-10-27_at_8.22.46_PM.png",
       "model" : "planner/models/js/open_door.js",
       "type" : "7"
     },
     {
       "name" : "Window",
+      "filetype" : "js",
       "image" : "planner/models/thumbnails/thumbnail_window.png",
       "model" : "planner/models/js/whitewindow.js",
       "type" : "3"
@@ -61,8 +91,8 @@ $(document).ready(function() {
       "image" : "planner/models/thumbnails/thumbnail_Church-Chair-oak-white_1024x1024.jpg",
       "model" : "planner/models/js/gus-churchchair-whiteoak.js",
       "type" : "1"
-    },
-    {
+    }
+/*    {
       "name" : "Red Chair",
       "image" : "planner/models/thumbnails/thumbnail_tn-orange.png",
       "model" : "planner/models/js/ik-ekero-orange_baked.js",
@@ -188,6 +218,7 @@ $(document).ready(function() {
       "model" : "planner/models/js/nyc-poster2.js",
       "type" : "2"
     }
+    */
    /*
    {
       "name" : "",
@@ -212,6 +243,8 @@ $(document).ready(function() {
                item.name +
                '" model-url="' +
                item.model +
+               '" file-type="' +
+               item.filetype +
                '" model-type="' +
                item.type +
                '"><img style="height: 100%;margin-left: -42px;width: 510%" src="' +

@@ -1,4 +1,4 @@
-var container, transformControl, controls;
+/*var container, transformControl, controls;
 var camera, scene, renderer;
 var geometry = new THREE.BoxGeometry( 20, 20, 20 );
 var ARC_SEGMENTS = 200;
@@ -140,3 +140,4 @@ var equipments = [];
 				renderer.setSize( window.innerWidth, window.innerHeight );
 
 			}
+*/

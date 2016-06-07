@@ -12,13 +12,12 @@
 //
 //= require jquery
 //= require jquery_ujs
-//= require three
 //= require materialize
 //= require init
 //= require zxcvbn
 //= require turbolinks
 //= require global
-//= require planner3D
 //= require items
+//= require planner3D
 //= require example
 //= require_tree
