@@ -17,7 +17,7 @@
 //= require zxcvbn
 //= require turbolinks
 //= require global
-//= require items
 //= require planner3D
+//= require items
 //= require example
 //= require_tree

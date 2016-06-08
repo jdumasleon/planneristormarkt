@@ -235,8 +235,8 @@
         "tab" : tabs.FLOORPLAN
       },
       "SHOP" : {
-        "div" : $("#add-items"),
-        "tab" : tabs.SHOP
+        //"div" : $("#add-items"),
+        //"tab" : tabs.SHOP
       }
     }
 
@@ -332,32 +332,24 @@
 
     function handleWindowResize() {
       $(".sidebar").height(window.innerHeight);
-      $("#add-items").height(window.innerHeight);
+      //$("#add-items").height(window.innerHeight);
 
     };
 
-    // TODO: this doesn't really belong here
+    // this doesn't really belong here
     function initItems() {
-     $("#add-items").find(".add-item").mousedown(function(e) {
-       var filetype = $(this).attr("file-type");
+     $("#add-items").find(".add-item").click(function(e) {
        var modelUrl = $(this).attr("model-url");
        var itemType = parseInt($(this).attr("model-type"));
        var metadata = {
          itemName: $(this).attr("model-name"),
          itemImage: this.firstChild.src,
          resizable: true,
-         filetype: filetype,
          modelUrl: modelUrl,
          itemType: itemType
        }
 
-       if (filetype == "dae") {
-         planner3D.model.scene.addColladaItem(itemType, modelUrl, metadata);
-       }
-       else {
-         planner3D.model.scene.addItem(itemType, modelUrl, metadata);
-       }
-
+       planner3D.model.scene.addItem(itemType, modelUrl, metadata);
        setCurrentState(scope.states.DEFAULT);
      });
     }

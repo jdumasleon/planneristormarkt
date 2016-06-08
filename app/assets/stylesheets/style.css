@@ -270,7 +270,7 @@
   */
 
  #viewer {
-   display: none;
+   /*display: none;*/
  }
 
  #floorplanner {
@@ -278,9 +278,8 @@
  }
 
  #add-items {
-   /*display: none;*/
-   /*padding: 20px;
-   overflow-y: auto;*/
+   display: none;
+   padding: 10px;
  }
 
  #main-controls {
@@ -370,11 +369,11 @@
    margin-right: 3px;
  }
 
-/*
+
  .add-item {
    cursor: pointer;
  }
-
+/*
  .btn-file {
    display: inline-block;
    cursor: pointer;

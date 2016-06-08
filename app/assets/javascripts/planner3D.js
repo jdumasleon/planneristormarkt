@@ -48769,43 +48769,6 @@ var Scene = function(model, textureDir) {
     );
   }
 
-	this.addColladaItem = function(itemType, fileName, metadata, position, rotation, scale, fixed) {
-		itemType = itemType || 1;
-
-		colladaloader.options.convertUpAxis = true;
-
-		var loaderCallback = function ( collada ) {
-			var item = new item_types[itemType](
-					model,
-					metadata, collada.dae.geometries,
-					new THREE.MeshFaceMaterial(collada.dae.materials),
-					position, rotation, scale
-				)
-
-
-			//dae.scale.x = dae.scale.y = dae.scale.z = 0.002;
-			//dae.updateMatrix();
-
-			item.fixed = fixed || false;
-			items.push(item);
-			//scope.add(dae);
-			scope.add(item);
-			item.initObject();
-			scope.itemLoadedCallbacks.fire(item);
-		}
-
-		// Function called when download progresses
-		var logFunction = function ( xhr ) {
-			console.log( (xhr.loaded / xhr.total * 100) + '% loaded' );
-		}
-
-		scope.itemLoadingCallbacks.fire();
-		colladaloader.load(
-			fileName,
-			loaderCallback,
-			logFunction );
-	}
-
 }
 
 module.exports = Scene;

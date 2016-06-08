@@ -4,84 +4,72 @@ $(document).ready(function() {
   var items = [
     {
        "name" : "CCZ0018",
-       "filetype" : "js",
        "image" : "planner/models/thumbnails/assets/CCZ0018.jpg",
        "model" : "planner/models/js/assets/CCZ0018.js",
        "type" : "1"
     },
     {
        "name" : "EFA0002",
-       "filetype" : "js",
        "image" : "planner/models/thumbnails/assets/EFA0002.jpg",
        "model" : "planner/models/js/assets/EFA0002.js",
        "type" : "1"
     },
     {
        "name" : "VS7080CFG",
-       "filetype" : "js",
        "image" : "planner/models/thumbnails/assets/VS7080CFG.jpg",
        "model" : "planner/models/js/assets/VS7080CFG.js",
        "type" : "1"
     },
     {
       "name" : "HCD0008",
-      "filetype" : "js",
       "image" : "planner/models/thumbnails/assets/HCD0008.jpg",
       "model" : "planner/models/js/assets/HCD0008.js",
       "type" : "1"
     },
     {
       "name" : "GDZ0018",
-      "filetype" : "js",
       "image" : "planner/models/thumbnails/assets/GDZ0018.jpg",
       "model" : "planner/models/js/assets/GDZ0018.js",
       "type" : "2"
     },
     {
       "name" : "GLB0037",
-      "filetype" : "js",
       "image" : "planner/models/thumbnails/assets/GLB0037.jpg",
       "model" : "planner/models/js/assets/GLB0037.js",
       "type" : "1"
     },
     {
       "name" : "GLA0017",
-      "filetype" : "js",
       "image" : "planner/models/thumbnails/assets/GLA0017.jpg",
       "model" : "planner/models/js/assets/GLA0017.js",
       "type" : "1"
     },
     {
       "name" : "CBD0014",
-      "filetype" : "js",
       "image" : "planner/models/thumbnails/assets/CBD0014.jpg",
       "model" : "planner/models/js/assets/CBD0014.js",
       "type" : "1"
     },
     {
       "name" : "BNC0017",
-      "filetype" : "js",
       "image" : "planner/models/thumbnails/assets/BNC0017.jpg",
       "model" : "planner/models/js/assets/BNC0017.js",
       "type" : "1"
     },
     {
       "name" : "Closed Door",
-      "filetype" : "js",
       "image" : "planner/models/thumbnails/thumbnail_Screen_Shot_2014-10-27_at_8.04.12_PM.png",
       "model" : "planner/models/js/closed-door28x80_baked.js",
       "type" : "7"
     },
     {
       "name" : "Open Door",
-      "filetype" : "js",
       "image" : "planner/models/thumbnails/thumbnail_Screen_Shot_2014-10-27_at_8.22.46_PM.png",
       "model" : "planner/models/js/open_door.js",
       "type" : "7"
     },
     {
       "name" : "Window",
-      "filetype" : "js",
       "image" : "planner/models/thumbnails/thumbnail_window.png",
       "model" : "planner/models/js/whitewindow.js",
       "type" : "3"
@@ -243,11 +231,9 @@ $(document).ready(function() {
                item.name +
                '" model-url="' +
                item.model +
-               '" file-type="' +
-               item.filetype +
                '" model-type="' +
                item.type +
-               '"><img style="height: 100%;margin-left: -42px;width: 510%" src="' +
+               '"><img style="height: 100%;margin-left: -42px;width: 430%" src="' +
                item.image +
                '" alt="Add Item"></a></div>';
 
