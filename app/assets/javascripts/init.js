@@ -74,10 +74,6 @@
     }
     window.onload = onloadNotifications;
 
-    document.addEventListener( 'mousedown', onDocumentMouseDown, false );
-		document.addEventListener( 'touchstart', onDocumentTouchStart, false );
-		document.addEventListener( 'touchmove', onDocumentTouchMove, false );
-
 
   }); // end of document ready
 })(jQuery); // end of jQuery name space

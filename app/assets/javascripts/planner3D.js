@@ -49956,7 +49956,7 @@ var ThreeControls = function (object, domElement) {
 	this.domElement.addEventListener( 'mousewheel', onMouseWheel, false );
 	this.domElement.addEventListener( 'DOMMouseScroll', onMouseWheel, false ); // firefox
 	//this.domElement.addEventListener( 'touchstart', touchstart, false );
-	this.domElement.addEventListener( 'touchend', touchend, false );
+	//this.domElement.addEventListener( 'touchend', touchend, false );
 	//this.domElement.addEventListener( 'touchmove', touchmove, false );
 
 
