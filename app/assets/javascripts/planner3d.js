@@ -1,6 +1,6 @@
 (function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof require=="function"&&require;if(!u&&a)return a(o,!0);if(i)return i(o,!0);var f=new Error("Cannot find module '"+o+"'");throw f.code="MODULE_NOT_FOUND",f}var l=n[o]={exports:{}};t[o][0].call(l.exports,function(e){var n=t[o][1][e];return s(n?n:e)},l,l.exports,e,t,n,r)}return n[o].exports}var i=typeof require=="function"&&require;for(var o=0;o<r.length;o++)s(r[o]);return s})({1:[function(require,module,exports){
 /*!
- * jQuery JavaScript Library v2.2.3
+ * jQuery JavaScript Library v2.2.4
  * http://jquery.com/
  *
  * Includes Sizzle.js
@@ -10,7 +10,7 @@
  * Released under the MIT license
  * http://jquery.org/license
  *
- * Date: 2016-04-05T19:26Z
+ * Date: 2016-05-20T17:23Z
  */
 
 (function( global, factory ) {
@@ -66,7 +66,7 @@ var support = {};
 
 
 var
-	version = "2.2.3",
+	version = "2.2.4",
 
 	// Define a local copy of jQuery
 	jQuery = function( selector, context ) {
@@ -5007,13 +5007,14 @@ jQuery.Event.prototype = {
 	isDefaultPrevented: returnFalse,
 	isPropagationStopped: returnFalse,
 	isImmediatePropagationStopped: returnFalse,
+	isSimulated: false,
 
 	preventDefault: function() {
 		var e = this.originalEvent;
 
 		this.isDefaultPrevented = returnTrue;
 
-		if ( e ) {
+		if ( e && !this.isSimulated ) {
 			e.preventDefault();
 		}
 	},
@@ -5022,7 +5023,7 @@ jQuery.Event.prototype = {
 
 		this.isPropagationStopped = returnTrue;
 
-		if ( e ) {
+		if ( e && !this.isSimulated ) {
 			e.stopPropagation();
 		}
 	},
@@ -5031,7 +5032,7 @@ jQuery.Event.prototype = {
 
 		this.isImmediatePropagationStopped = returnTrue;
 
-		if ( e ) {
+		if ( e && !this.isSimulated ) {
 			e.stopImmediatePropagation();
 		}
 
@@ -5961,19 +5962,6 @@ function getWidthOrHeight( elem, name, extra ) {
 		val = name === "width" ? elem.offsetWidth : elem.offsetHeight,
 		styles = getStyles( elem ),
 		isBorderBox = jQuery.css( elem, "boxSizing", false, styles ) === "border-box";
-
-	// Support: IE11 only
-	// In IE 11 fullscreen elements inside of an iframe have
-	// 100x too small dimensions (gh-1764).
-	if ( document.msFullscreenElement && window.top !== window ) {
-
-		// Support: IE11 only
-		// Running getBoundingClientRect on a disconnected node
-		// in IE throws an error.
-		if ( elem.getClientRects().length ) {
-			val = Math.round( elem.getBoundingClientRect()[ name ] * 100 );
-		}
-	}
 
 	// Some non-html elements return undefined for offsetWidth, so check for null/undefined
 	// svg - https://bugzilla.mozilla.org/show_bug.cgi?id=649285
@@ -7865,6 +7853,7 @@ jQuery.extend( jQuery.event, {
 	},
 
 	// Piggyback on a donor event to simulate a different one
+	// Used only for `focus(in | out)` events
 	simulate: function( type, elem, event ) {
 		var e = jQuery.extend(
 			new jQuery.Event(),
@@ -7872,27 +7861,10 @@ jQuery.extend( jQuery.event, {
 			{
 				type: type,
 				isSimulated: true
-
-				// Previously, `originalEvent: {}` was set here, so stopPropagation call
-				// would not be triggered on donor event, since in our own
-				// jQuery.event.stopPropagation function we had a check for existence of
-				// originalEvent.stopPropagation method, so, consequently it would be a noop.
-				//
-				// But now, this "simulate" function is used only for events
-				// for which stopPropagation() is noop, so there is no need for that anymore.
-				//
-				// For the 1.x branch though, guard for "click" and "submit"
-				// events is still used, but was moved to jQuery.event.stopPropagation function
-				// because `originalEvent` should point to the original event for the constancy
-				// with other events and for more focused logic
 			}
 		);
 
 		jQuery.event.trigger( e, null, elem );
-
-		if ( e.isDefaultPrevented() ) {
-			event.preventDefault();
-		}
 	}
 
 } );
@@ -44369,7 +44341,7 @@ THREE.MorphBlendMesh.prototype.autoCreateAnimations = function ( fps ) {
 };
 
 THREE.MorphBlendMesh.prototype.setAnimationDirectionForward = function ( name ) {
-Planner3D
+
 	var animation = this.animationsMap[ name ];
 
 	if ( animation ) {
@@ -44573,1607 +44545,6 @@ THREE.MorphBlendMesh.prototype.update = function ( delta ) {
 
 };
 
-//*******************************************************************************
-//
-//			 Collada Loader2
-//
-//*******************************************************************************
-/**
- * @author mrdoob / http://mrdoob.com/
- */
-
-THREE.ColladaLoader = function ( manager ) {
-
-	this.manager = ( manager !== undefined ) ? manager : THREE.DefaultLoadingManager;
-
-};
-
-THREE.ColladaLoader.prototype = {
-
-	constructor: THREE.ColladaLoader,
-
-	load: function ( url, onLoad, onProgress, onError ) {
-
-		function getBaseUrl( url ) {
-
-			var parts = url.split( '/' );
-			parts.pop();
-			return ( parts.length < 1 ? '.' : parts.join( '/' ) ) + '/';
-
-		}
-
-		var scope = this;
-
-		var loader = new THREE.XHRLoader( scope.manager );
-		loader.load( url, function ( text ) {
-
-			onLoad( scope.parse( text, getBaseUrl( url ) ) );
-
-		}, onProgress, onError );
-
-	},
-
-	options: {
-
-		set convertUpAxis ( value ) {
-
-			console.log( 'ColladaLoder.options.convertUpAxis: TODO' );
-
-		}
-
-	},
-
-	setCrossOrigin: function ( value ) {
-
-		this.crossOrigin = value;
-
-	},
-
-	parse: function ( text, baseUrl ) {
-
-		function getElementsByTagName( xml, name ) {
-
-			// Non recursive xml.getElementsByTagName() ...
-
-			var array = [];
-			var childNodes = xml.childNodes;
-
-			for ( var i = 0, l = childNodes.length; i < l; i ++ ) {
-
-				var child = childNodes[ i ];
-
-				if ( child.nodeName === name ) {
-
-					array.push( child );
-
-				}
-
-			}
-
-			return array;
-
-		}
-
-		function parseFloats( text ) {
-
-			if ( text.length === 0 ) return [];
-
-			var parts = text.trim().split( /\s+/ );
-			var array = new Array( parts.length );
-
-			for ( var i = 0, l = parts.length; i < l; i ++ ) {
-
-				array[ i ] = parseFloat( parts[ i ] );
-
-			}
-
-			return array;
-
-		}
-
-		function parseInts( text ) {
-
-			if ( text.length === 0 ) return [];
-
-			var parts = text.trim().split( /\s+/ );
-			var array = new Array( parts.length );
-
-			for ( var i = 0, l = parts.length; i < l; i ++ ) {
-
-				array[ i ] = parseInt( parts[ i ] );
-
-			}
-
-			return array;
-
-		}
-
-		function parseId( text ) {
-
-			return text.substring( 1 );
-
-		}
-
-		// asset
-
-		function parseAsset( xml ) {
-
-			return {
-				unit: parseAssetUnit( getElementsByTagName( xml, 'unit' )[ 0 ] ),
-				upAxis: parseAssetUpAxis( getElementsByTagName( xml, 'up_axis' )[ 0 ] )
-			};
-
-		}
-
-		function parseAssetUnit( xml ) {
-
-			return xml !== undefined ? parseFloat( xml.getAttribute( 'meter' ) ) : 1;
-
-		}
-
-		function parseAssetUpAxis( xml ) {
-
-			return xml !== undefined ? xml.textContent : 'Y_UP';
-
-		}
-
-		// library
-
-		function parseLibrary( xml, data, libraryName, nodeName, parser ) {
-
-			var library = getElementsByTagName( xml, libraryName )[ 0 ];
-
-			if ( library !== undefined ) {
-
-				var elements = getElementsByTagName( library, nodeName );
-
-				for ( var i = 0; i < elements.length; i ++ ) {
-
-					parser( elements[ i ] );
-
-				}
-
-			}
-
-		}
-
-		function buildLibrary( data, builder ) {
-
-			for ( var name in data ) {
-
-				var object = data[ name ];
-				object.build = builder( data[ name ] );
-
-			}
-
-		}
-
-		// get
-
-		function getBuild( data, builder ) {
-
-			if ( data.build !== undefined ) return data.build;
-
-			data.build = builder( data );
-
-			return data.build;
-
-		}
-
-		// image
-
-		var imageLoader = new THREE.ImageLoader();
-
-		function parseImage( xml ) {
-
-			var data = {
-				init_from: getElementsByTagName( xml, 'init_from' )[ 0 ].textContent
-			};
-
-			library.images[ xml.getAttribute( 'id' ) ] = data;
-
-		}
-
-		function buildImage( data ) {
-
-			if ( data.build !== undefined ) return data.build;
-
-			var url = data.init_from;
-
-			if ( baseUrl !== undefined ) url = baseUrl + url;
-
-			return imageLoader.load( url );
-
-		}
-
-		function getImage( id ) {
-
-			return getBuild( library.images[ id ], buildImage );
-
-		}
-
-		// effect
-
-		function parseEffect( xml ) {
-
-			var data = {};
-
-			for ( var i = 0, l = xml.childNodes.length; i < l; i ++ ) {
-
-				var child = xml.childNodes[ i ];
-
-				if ( child.nodeType !== 1 ) continue;
-
-				switch ( child.nodeName ) {
-
-					case 'profile_COMMON':
-						data.profile = parseEffectProfileCOMMON( child );
-						break;
-
-				}
-
-			}
-
-			library.effects[ xml.getAttribute( 'id' ) ] = data;
-
-		}
-
-		function parseEffectProfileCOMMON( xml ) {
-
-			var data = {
-				surfaces: {},
-				samplers: {}
-			};
-
-			for ( var i = 0, l = xml.childNodes.length; i < l; i ++ ) {
-
-				var child = xml.childNodes[ i ];
-
-				if ( child.nodeType !== 1 ) continue;
-
-				switch ( child.nodeName ) {
-
-					case 'newparam':
-						parseEffectNewparam( child, data );
-						break;
-
-					case 'technique':
-						data.technique = parseEffectTechnique( child );
-						break;
-
-				}
-
-			}
-
-			return data;
-
-		}
-
-		function parseEffectNewparam( xml, data ) {
-
-			var sid = xml.getAttribute( 'sid' );
-
-			for ( var i = 0, l = xml.childNodes.length; i < l; i ++ ) {
-
-				var child = xml.childNodes[ i ];
-
-				if ( child.nodeType !== 1 ) continue;
-
-				switch ( child.nodeName ) {
-
-					case 'surface':
-						data.surfaces[ sid ] = parseEffectSurface( child );
-						break;
-
-					case 'sampler2D':
-						data.samplers[ sid ] = parseEffectSampler( child );
-						break;
-
-				}
-
-			}
-
-		}
-
-		function parseEffectSurface( xml ) {
-
-			var data = {};
-
-			for ( var i = 0, l = xml.childNodes.length; i < l; i ++ ) {
-
-				var child = xml.childNodes[ i ];
-
-				if ( child.nodeType !== 1 ) continue;
-
-				switch ( child.nodeName ) {
-
-					case 'init_from':
-						data.init_from = child.textContent;
-						break;
-
-				}
-
-			}
-
-			return data;
-
-		}
-
-		function parseEffectSampler( xml ) {
-
-			var data = {};
-
-			for ( var i = 0, l = xml.childNodes.length; i < l; i ++ ) {
-
-				var child = xml.childNodes[ i ];
-
-				if ( child.nodeType !== 1 ) continue;
-
-				switch ( child.nodeName ) {
-
-					case 'source':
-						data.source = child.textContent;
-						break;
-
-				}
-
-			}
-
-			return data;
-
-		}
-
-		function parseEffectTechnique( xml ) {
-
-			var data = {};
-
-			for ( var i = 0, l = xml.childNodes.length; i < l; i ++ ) {
-
-				var child = xml.childNodes[ i ];
-
-				if ( child.nodeType !== 1 ) continue;
-
-				switch ( child.nodeName ) {
-
-					case 'constant':
-					case 'lambert':
-					case 'blinn':
-					case 'phong':
-						data.type = child.nodeName;
-						data.parameters = parseEffectParameters( child );
-						break;
-
-				}
-
-			}
-
-			return data;
-
-		}
-
-		function parseEffectParameters( xml ) {
-
-			var data = {};
-
-			for ( var i = 0, l = xml.childNodes.length; i < l; i ++ ) {
-
-				var child = xml.childNodes[ i ];
-
-				if ( child.nodeType !== 1 ) continue;
-
-				switch ( child.nodeName ) {
-
-					case 'emission':
-					case 'diffuse':
-					case 'specular':
-					case 'shininess':
-					case 'transparency':
-						data[ child.nodeName ] = parseEffectParameter( child );
-						break;
-
-				}
-
-			}
-
-			return data;
-
-		}
-
-		function parseEffectParameter( xml ) {
-
-			var data = {};
-
-			for ( var i = 0, l = xml.childNodes.length; i < l; i ++ ) {
-
-				var child = xml.childNodes[ i ];
-
-				if ( child.nodeType !== 1 ) continue;
-
-				switch ( child.nodeName ) {
-
-					case 'color':
-						data[ child.nodeName ] = parseFloats( child.textContent );
-						break;
-
-					case 'float':
-						data[ child.nodeName ] = parseFloat( child.textContent );
-						break;
-
-					case 'texture':
-						data[ child.nodeName ] = { id: child.getAttribute( 'texture' ), extra: parseEffectParameterTexture( child ) };
-						break;
-
-				}
-
-			}
-
-			return data;
-
-		}
-
-		function parseEffectParameterTexture( xml ) {
-
-			var data = {};
-
-			for ( var i = 0, l = xml.childNodes.length; i < l; i ++ ) {
-
-				var child = xml.childNodes[ i ];
-
-				if ( child.nodeType !== 1 ) continue;
-
-				switch ( child.nodeName ) {
-
-					case 'extra':
-						data = parseEffectParameterTextureExtra( child );
-						break;
-
-				}
-
-			}
-
-			return data;
-
-		}
-
-		function parseEffectParameterTextureExtra( xml ) {
-
-			var data = {};
-
-			for ( var i = 0, l = xml.childNodes.length; i < l; i ++ ) {
-
-				var child = xml.childNodes[ i ];
-
-				if ( child.nodeType !== 1 ) continue;
-
-				switch ( child.nodeName ) {
-
-					case 'technique':
-						data[ child.nodeName ] = parseEffectParameterTextureExtraTechnique( child );
-						break;
-
-				}
-
-			}
-
-			return data;
-
-		}
-
-		function parseEffectParameterTextureExtraTechnique( xml ) {
-
-			var data = {};
-
-			for ( var i = 0, l = xml.childNodes.length; i < l; i ++ ) {
-
-				var child = xml.childNodes[ i ];
-
-				if ( child.nodeType !== 1 ) continue;
-
-				switch ( child.nodeName ) {
-
-					case 'repeatU':
-					case 'repeatV':
-					case 'offsetU':
-					case 'offsetV':
-						data[ child.nodeName ] = parseFloat( child.textContent );
-						break;
-
-					case 'wrapU':
-					case 'wrapV':
-						data[ child.nodeName ] = parseInt( child.textContent );
-						break;
-
-				}
-
-			}
-
-			return data;
-
-		}
-
-		function buildEffect( data ) {
-
-			return data;
-
-		}
-
-		function getEffect( id ) {
-
-			return getBuild( library.effects[ id ], buildEffect );
-
-		}
-
-		// material
-
-		function parseMaterial( xml ) {
-
-			var data = {
-				name: xml.getAttribute( 'name' )
-			};
-
-			for ( var i = 0, l = xml.childNodes.length; i < l; i ++ ) {
-
-				var child = xml.childNodes[ i ];
-
-				if ( child.nodeType !== 1 ) continue;
-
-				switch ( child.nodeName ) {
-
-					case 'instance_effect':
-						data.url = parseId( child.getAttribute( 'url' ) );
-						break;
-
-				}
-
-			}
-
-			library.materials[ xml.getAttribute( 'id' ) ] = data;
-
-		}
-
-		function buildMaterial( data ) {
-
-			var effect = getEffect( data.url );
-			var technique = effect.profile.technique;
-
-			var material;
-
-			switch ( technique.type ) {
-
-				case 'phong':
-				case 'blinn':
-					material = new THREE.MeshPhongMaterial();
-					break;
-
-				case 'lambert':
-					material = new THREE.MeshLambertMaterial();
-					break;
-
-				default:
-					material = new THREE.MeshBasicMaterial();
-					break;
-
-			}
-
-			material.name = data.name;
-
-			function getTexture( textureObject ) {
-
-				var sampler = effect.profile.samplers[ textureObject.id ];
-
-				if ( sampler !== undefined ) {
-
-					var surface = effect.profile.surfaces[ sampler.source ];
-
-					var texture = new THREE.Texture( getImage( surface.init_from ) );
-
-					var extra = textureObject.extra;
-
-					if ( extra !== undefined && extra.technique !== undefined ) {
-
-						var technique = extra.technique;
-
-						texture.wrapS = technique.wrapU ? THREE.RepeatWrapping : THREE.ClampToEdgeWrapping;
-						texture.wrapT = technique.wrapV ? THREE.RepeatWrapping : THREE.ClampToEdgeWrapping;
-
-						texture.offset.set( technique.offsetU, technique.offsetV );
-						texture.repeat.set( technique.repeatU, technique.repeatV );
-
-					} else {
-
-						texture.wrapS = THREE.RepeatWrapping;
-						texture.wrapT = THREE.RepeatWrapping;
-
-					}
-
-					texture.needsUpdate = true;
-
-					return texture;
-
-				}
-
-				console.error( 'ColladaLoder: Undefined sampler', textureObject.id );
-
-				return null;
-
-			}
-
-			var parameters = technique.parameters;
-
-			for ( var key in parameters ) {
-
-				var parameter = parameters[ key ];
-
-				switch ( key ) {
-					case 'diffuse':
-						if ( parameter.color ) material.color.fromArray( parameter.color );
-						if ( parameter.texture ) material.map = getTexture( parameter.texture );
-						break;
-					case 'specular':
-						if ( parameter.color && material.specular )
-							material.specular.fromArray( parameter.color );
-						break;
-					case 'shininess':
-						if ( parameter.float && material.shininess )
-							material.shininess = parameter.float;
-						break;
-					case 'emission':
-						if ( parameter.color && material.emissive )
-							material.emissive.fromArray( parameter.color );
-						break;
-					case 'transparency':
-						if ( parameter.float )
-							material.opacity = parameter.float;
-						if ( parameter.float !== 1 )
-							material.transparent = true;
-						break;
-				}
-
-			}
-
-			return material;
-
-		}
-
-		function getMaterial( id ) {
-
-			return getBuild( library.materials[ id ], buildMaterial );
-
-		}
-
-		// camera
-
-		function parseCamera( xml ) {
-
-			var data = {
-				name: xml.getAttribute( 'name' )
-			};
-
-			for ( var i = 0, l = xml.childNodes.length; i < l; i ++ ) {
-
-				var child = xml.childNodes[ i ];
-
-				if ( child.nodeType !== 1 ) continue;
-
-				switch ( child.nodeName ) {
-
-					case 'optics':
-						data.optics = parseCameraOptics( child );
-						break;
-
-				}
-
-			}
-
-			library.cameras[ xml.getAttribute( 'id' ) ] = data;
-
-		}
-
-		function parseCameraOptics( xml ) {
-
-			for ( var i = 0; i < xml.childNodes.length; i ++ ) {
-
-				var child = xml.childNodes[ i ];
-
-				switch ( child.nodeName ) {
-
-					case 'technique_common':
-						return parseCameraTechnique( child );
-
-				}
-
-			}
-
-			return {};
-
-		}
-
-		function parseCameraTechnique( xml ) {
-
-			var data = {};
-
-			for ( var i = 0; i < xml.childNodes.length; i ++ ) {
-
-				var child = xml.childNodes[ i ];
-
-				switch ( child.nodeName ) {
-
-					case 'perspective':
-					case 'orthographic':
-
-						data.technique = child.nodeName;
-						data.parameters = parseCameraParameters( child );
-
-						break;
-
-				}
-
-			}
-
-			return data;
-
-		}
-
-		function parseCameraParameters( xml ) {
-
-			var data = {};
-
-			for ( var i = 0; i < xml.childNodes.length; i ++ ) {
-
-				var child = xml.childNodes[ i ];
-
-				switch ( child.nodeName ) {
-
-					case 'xfov':
-					case 'yfov':
-					case 'xmag':
-					case 'ymag':
-					case 'znear':
-					case 'zfar':
-					case 'aspect_ratio':
-						data[ child.nodeName ] = parseFloat( child.textContent );
-						break;
-
-				}
-
-			}
-
-			return data;
-
-		}
-
-		function buildCamera( data ) {
-
-			var camera;
-
-			switch ( data.optics.technique ) {
-
-				case 'perspective':
-					camera = new THREE.PerspectiveCamera(
-						data.optics.parameters.yfov,
-						data.optics.parameters.aspect_ratio,
-						data.optics.parameters.znear,
-						data.optics.parameters.zfar
-					);
-					break;
-
-				case 'orthographic':
-					camera = new THREE.OrthographicCamera( /* TODO */ );
-					break;
-
-				default:
-					camera = new THREE.PerspectiveCamera();
-					break;
-
-			}
-
-			camera.name = data.name;
-
-			return camera;
-
-		}
-
-		function getCamera( id ) {
-
-			return getBuild( library.cameras[ id ], buildCamera );
-
-		}
-
-		// light
-
-		function parseLight( xml ) {
-
-			var data = {};
-
-			for ( var i = 0, l = xml.childNodes.length; i < l; i ++ ) {
-
-				var child = xml.childNodes[ i ];
-
-				if ( child.nodeType !== 1 ) continue;
-
-				switch ( child.nodeName ) {
-
-					case 'technique_common':
-						data = parseLightTechnique( child );
-						break;
-
-				}
-
-			}
-
-			library.lights[ xml.getAttribute( 'id' ) ] = data;
-
-		}
-
-		function parseLightTechnique( xml ) {
-
-			var data = {};
-
-			for ( var i = 0, l = xml.childNodes.length; i < l; i ++ ) {
-
-				var child = xml.childNodes[ i ];
-
-				if ( child.nodeType !== 1 ) continue;
-
-				switch ( child.nodeName ) {
-
-					case 'directional':
-					case 'point':
-					case 'spot':
-					case 'ambient':
-
-						data.technique = child.nodeName;
-						data.parameters = parseLightParameters( child );
-
-				}
-
-			}
-
-			return data;
-
-		}
-
-		function parseLightParameters( xml ) {
-
-			var data = {};
-
-			for ( var i = 0, l = xml.childNodes.length; i < l; i ++ ) {
-
-				var child = xml.childNodes[ i ];
-
-				if ( child.nodeType !== 1 ) continue;
-
-				switch ( child.nodeName ) {
-
-					case 'color':
-						var array = parseFloats( child.textContent );
-						data.color = new THREE.Color().fromArray( array );
-						break;
-
-					case 'falloff_angle':
-						data.falloffAngle = parseFloat( child.textContent );
-						break;
-
-					case 'quadratic_attenuation':
-						var f = parseFloat( child.textContent );
-						data.distance = f ? Math.sqrt( 1 / f ) : 0;
-						break;
-
-				}
-
-			}
-
-			return data;
-
-		}
-
-		function buildLight( data ) {
-
-			var light;
-
-			switch ( data.technique ) {
-
-				case 'directional':
-					light = new THREE.DirectionalLight();
-					break;
-
-				case 'point':
-					light = new THREE.PointLight();
-					break;
-
-				case 'spot':
-					light = new THREE.SpotLight();
-					break;
-
-				case 'ambient':
-					light = new THREE.AmbientLight();
-					break;
-
-			}
-
-			if ( data.parameters.color ) light.color.copy( data.parameters.color );
-			if ( data.parameters.distance ) light.distance = data.parameters.distance;
-
-			return light;
-
-		}
-
-		function getLight( id ) {
-
-			return getBuild( library.lights[ id ], buildLight );
-
-		}
-
-		// geometry
-
-		function parseGeometry( xml ) {
-
-			var data = {
-				name: xml.getAttribute( 'name' ),
-				sources: {},
-				vertices: {},
-				primitives: []
-			};
-
-			var mesh = getElementsByTagName( xml, 'mesh' )[ 0 ];
-
-			for ( var i = 0; i < mesh.childNodes.length; i ++ ) {
-
-				var child = mesh.childNodes[ i ];
-
-				if ( child.nodeType !== 1 ) continue;
-
-				var id = child.getAttribute( 'id' );
-
-				switch ( child.nodeName ) {
-
-					case 'source':
-						data.sources[ id ] = parseGeometrySource( child );
-						break;
-
-					case 'vertices':
-						// data.sources[ id ] = data.sources[ parseId( getElementsByTagName( child, 'input' )[ 0 ].getAttribute( 'source' ) ) ];
-						data.vertices = parseGeometryVertices( child );
-						break;
-
-					case 'polygons':
-						console.log( 'ColladaLoader: Unsupported primitive type: ', child.nodeName );
-						break;
-
-					case 'lines':
-					case 'linestrips':
-					case 'polylist':
-					case 'triangles':
-						data.primitives.push( parseGeometryPrimitive( child ) );
-						break;
-
-					default:
-						console.log( child );
-
-				}
-
-			}
-
-			library.geometries[ xml.getAttribute( 'id' ) ] = data;
-
-		}
-
-		function parseGeometrySource( xml ) {
-
-			var data = {
-				array: [],
-				stride: 3
-			};
-
-			for ( var i = 0; i < xml.childNodes.length; i ++ ) {
-
-				var child = xml.childNodes[ i ];
-
-				if ( child.nodeType !== 1 ) continue;
-
-				switch ( child.nodeName ) {
-
-					case 'float_array':
-						data.array = parseFloats( child.textContent );
-						break;
-
-					case 'technique_common':
-						var accessor = getElementsByTagName( child, 'accessor' )[ 0 ];
-
-						if ( accessor !== undefined ) {
-
-							data.stride = parseInt( accessor.getAttribute( 'stride' ) );
-
-						}
-						break;
-
-					default:
-						console.log( child );
-
-				}
-
-			}
-
-			return data;
-
-		}
-
-		function parseGeometryVertices( xml ) {
-
-			var data = {};
-
-			for ( var i = 0; i < xml.childNodes.length; i ++ ) {
-
-				var child = xml.childNodes[ i ];
-
-				if ( child.nodeType !== 1 ) continue;
-
-				data[ child.getAttribute( 'semantic' ) ] = parseId( child.getAttribute( 'source' ) );
-
-			}
-
-			return data;
-
-		}
-
-		function parseGeometryPrimitive( xml ) {
-
-			var primitive = {
-				type: xml.nodeName,
-				material: xml.getAttribute( 'material' ),
-				inputs: {},
-				stride: 0
-			};
-
-			for ( var i = 0, l = xml.childNodes.length; i < l; i ++ ) {
-
-				var child = xml.childNodes[ i ];
-
-				if ( child.nodeType !== 1 ) continue;
-
-				switch ( child.nodeName ) {
-
-					case 'input':
-						var id = parseId( child.getAttribute( 'source' ) );
-						var semantic = child.getAttribute( 'semantic' );
-						var offset = parseInt( child.getAttribute( 'offset' ) );
-						primitive.inputs[ semantic ] = { id: id, offset: offset };
-						primitive.stride = Math.max( primitive.stride, offset + 1 );
-						break;
-
-					case 'vcount':
-						primitive.vcount = parseInts( child.textContent );
-						break;
-
-					case 'p':
-						primitive.p = parseInts( child.textContent );
-						break;
-
-				}
-
-			}
-
-			return primitive;
-
-		}
-
-		var DEFAULT_LINEMATERIAL = new THREE.LineBasicMaterial();
-		var DEFAULT_MESHMATERIAL = new THREE.MeshPhongMaterial();
-
-		function buildGeometry( data ) {
-
-			var group = {};
-
-			var sources = data.sources;
-			var vertices = data.vertices;
-			var primitives = data.primitives;
-
-			if ( primitives.length === 0 ) return group;
-
-			for ( var p = 0; p < primitives.length; p ++ ) {
-
-				var primitive = primitives[ p ];
-				var inputs = primitive.inputs;
-
-				var geometry = new THREE.BufferGeometry();
-
-				if ( data.name ) geometry.name = data.name;
-
-				for ( var name in inputs ) {
-
-					var input = inputs[ name ];
-
-					switch ( name )	{
-
-						case 'VERTEX':
-							for ( var key in vertices ) {
-
-								geometry.addAttribute( key.toLowerCase(), buildGeometryAttribute( primitive, sources[ vertices[ key ] ], input.offset ) );
-
-							}
-							break;
-
-						case 'NORMAL':
-							geometry.addAttribute( 'normal', buildGeometryAttribute( primitive, sources[ input.id ], input.offset ) );
-							break;
-
-						case 'COLOR':
-							geometry.addAttribute( 'color', buildGeometryAttribute( primitive, sources[ input.id ], input.offset ) );
-							break;
-
-						case 'TEXCOORD':
-							geometry.addAttribute( 'uv', buildGeometryAttribute( primitive, sources[ input.id ], input.offset ) );
-							break;
-
-					}
-
-				}
-
-				var object;
-
-				switch ( primitive.type ) {
-
-					case 'lines':
-						object = new THREE.LineSegments( geometry, DEFAULT_LINEMATERIAL );
-						break;
-
-					case 'linestrips':
-						object = new THREE.Line( geometry, DEFAULT_LINEMATERIAL );
-						break;
-
-					case 'triangles':
-					case 'polylist':
-						object = new THREE.Mesh( geometry, DEFAULT_MESHMATERIAL );
-						break;
-
-				}
-
-				group[ primitive.material ] = object;
-
-			}
-
-			return group;
-
-		}
-
-		function buildGeometryAttribute( primitive, source, offset ) {
-
-			var indices = primitive.p;
-			var stride = primitive.stride;
-			var vcount = primitive.vcount;
-
-			function pushVector( i ) {
-
-				var index = indices[ i + offset ] * sourceStride;
-				var length = index + sourceStride;
-
-				for ( ; index < length; index ++ ) {
-
-					array.push( sourceArray[ index ] );
-
-				}
-
-			}
-
-			var maxcount = 0;
-
-			var sourceArray = source.array;
-			var sourceStride = source.stride;
-
-			var array = [];
-
-			if ( primitive.vcount !== undefined ) {
-
-				var index = 0;
-
-				for ( var i = 0, l = vcount.length; i < l; i ++ ) {
-
-					var count = vcount[ i ];
-
-					if ( count === 4 ) {
-
-						var a = index + stride * 0;
-						var b = index + stride * 1;
-						var c = index + stride * 2;
-						var d = index + stride * 3;
-
-						pushVector( a ); pushVector( b ); pushVector( d );
-						pushVector( b ); pushVector( c ); pushVector( d );
-
-					} else if ( count === 3 ) {
-
-						var a = index + stride * 0;
-						var b = index + stride * 1;
-						var c = index + stride * 2;
-
-						pushVector( a ); pushVector( b ); pushVector( c );
-
-					} else {
-
-						maxcount = Math.max( maxcount, count );
-
-					}
-
-					index += stride * count;
-
-				}
-
-				if ( maxcount > 0 ) {
-
-					console.log( 'ColladaLoader: Geometry has faces with more than 4 vertices.' );
-
-				}
-
-			} else {
-
-				for ( var i = 0, l = indices.length; i < l; i += stride ) {
-
-					pushVector( i );
-
-				}
-
-			}
-
-			return new THREE.Float32Attribute( array, sourceStride );
-
-		}
-
-		function getGeometry( id ) {
-
-			return getBuild( library.geometries[ id ], buildGeometry );
-
-		}
-
-		// nodes
-
-		var matrix = new THREE.Matrix4();
-		var vector = new THREE.Vector3();
-
-		function parseNode( xml ) {
-
-			var data = {
-				name: xml.getAttribute( 'name' ),
-				matrix: new THREE.Matrix4(),
-				nodes: [],
-				instanceCameras: [],
-				instanceLights: [],
-				instanceGeometries: [],
-				instanceNodes: []
-			};
-
-			for ( var i = 0; i < xml.childNodes.length; i ++ ) {
-
-				var child = xml.childNodes[ i ];
-
-				if ( child.nodeType !== 1 ) continue;
-
-				switch ( child.nodeName ) {
-
-					case 'node':
-						parseNode( child );
-						data.nodes.push( child.getAttribute( 'id' ) );
-						break;
-
-					case 'instance_camera':
-						data.instanceCameras.push( parseId( child.getAttribute( 'url' ) ) );
-						break;
-
-					case 'instance_light':
-						data.instanceLights.push( parseId( child.getAttribute( 'url' ) ) );
-						break;
-
-					case 'instance_geometry':
-						data.instanceGeometries.push( parseNodeInstanceGeometry( child ) );
-						break;
-
-					case 'instance_node':
-						data.instanceNodes.push( parseId( child.getAttribute( 'url' ) ) );
-						break;
-
-					case 'matrix':
-						var array = parseFloats( child.textContent );
-						data.matrix.multiply( matrix.fromArray( array ).transpose() ); // .transpose() when Z_UP?
-						break;
-
-					case 'translate':
-						var array = parseFloats( child.textContent );
-						vector.fromArray( array );
-						data.matrix.multiply( matrix.makeTranslation( vector.x, vector.y, vector.z ) );
-						break;
-
-					case 'rotate':
-						var array = parseFloats( child.textContent );
-						var angle = THREE.Math.degToRad( array[ 3 ] );
-						data.matrix.multiply( matrix.makeRotationAxis( vector.fromArray( array ), angle ) );
-						break;
-
-					case 'scale':
-						var array = parseFloats( child.textContent );
-						data.matrix.scale( vector.fromArray( array ) );
-						break;
-
-					case 'extra':
-						break;
-
-					default:
-						console.log( child );
-
-				}
-
-			}
-
-			if ( xml.getAttribute( 'id' ) !== null ) {
-
-				library.nodes[ xml.getAttribute( 'id' ) ] = data;
-
-			}
-
-			return data;
-
-		}
-
-		function parseNodeInstanceGeometry( xml ) {
-
-			var data = {
-				id: parseId( xml.getAttribute( 'url' ) ),
-				materials: {}
-			};
-
-			for ( var i = 0; i < xml.childNodes.length; i ++ ) {
-
-				var child = xml.childNodes[ i ];
-
-				if ( child.nodeName === 'bind_material' ) {
-
-					var instances = child.getElementsByTagName( 'instance_material' );
-
-					for ( var j = 0; j < instances.length; j ++ ) {
-
-						var instance = instances[ j ];
-						var symbol = instance.getAttribute( 'symbol' );
-						var target = instance.getAttribute( 'target' );
-
-						data.materials[ symbol ] = parseId( target );
-
-					}
-
-					break;
-
-				}
-
-			}
-
-			return data;
-
-		}
-
-		function buildNode( data ) {
-
-			var objects = [];
-
-			var matrix = data.matrix;
-			var nodes = data.nodes;
-			var instanceCameras = data.instanceCameras;
-			var instanceLights = data.instanceLights;
-			var instanceGeometries = data.instanceGeometries;
-			var instanceNodes = data.instanceNodes;
-
-			for ( var i = 0, l = nodes.length; i < l; i ++ ) {
-
-				objects.push( getNode( nodes[ i ] ).clone() );
-
-			}
-
-			for ( var i = 0, l = instanceCameras.length; i < l; i ++ ) {
-
-				objects.push( getCamera( instanceCameras[ i ] ).clone() );
-
-			}
-
-			for ( var i = 0, l = instanceLights.length; i < l; i ++ ) {
-
-				objects.push( getLight( instanceLights[ i ] ).clone() );
-
-			}
-
-			for ( var i = 0, l = instanceGeometries.length; i < l; i ++ ) {
-
-				var instance = instanceGeometries[ i ];
-				var geometries = getGeometry( instance.id );
-
-				for ( var key in geometries ) {
-
-					var object = geometries[ key ].clone();
-
-					if ( instance.materials[ key ] !== undefined ) {
-
-						object.material = getMaterial( instance.materials[ key ] );
-
-					}
-
-					objects.push( object );
-
-				}
-
-			}
-
-			for ( var i = 0, l = instanceNodes.length; i < l; i ++ ) {
-
-				objects.push( getNode( instanceNodes[ i ] ).clone() );
-
-			}
-
-			var object;
-
-			if ( nodes.length === 0 && objects.length === 1 ) {
-
-				object = objects[ 0 ];
-
-			} else {
-
-				object = new THREE.Group();
-
-				for ( var i = 0; i < objects.length; i ++ ) {
-
-					object.add( objects[ i ] );
-
-				}
-
-			}
-
-			object.name = data.name;
-			matrix.decompose( object.position, object.quaternion, object.scale );
-
-			return object;
-
-		}
-
-		function getNode( id ) {
-
-			return getBuild( library.nodes[ id ], buildNode );
-
-		}
-
-		// visual scenes
-
-		function parseVisualScene( xml ) {
-
-			var data = {
-				name: xml.getAttribute( 'name' ),
-				children: []
-			};
-
-			var elements = getElementsByTagName( xml, 'node' );
-
-			for ( var i = 0; i < elements.length; i ++ ) {
-
-				data.children.push( parseNode( elements[ i ] ) );
-
-			}
-
-			library.visualScenes[ xml.getAttribute( 'id' ) ] = data;
-
-		}
-
-		function buildVisualScene( data ) {
-
-			var group = new THREE.Group();
-			group.name = data.name;
-
-			var children = data.children;
-
-			for ( var i = 0; i < children.length; i ++ ) {
-
-				group.add( buildNode( children[ i ] ) );
-
-			}
-
-			return group;
-
-		}
-
-		function getVisualScene( id ) {
-
-			return getBuild( library.visualScenes[ id ], buildVisualScene );
-
-		}
-
-		// scenes
-
-		function parseScene( xml ) {
-
-			var instance = getElementsByTagName( xml, 'instance_visual_scene' )[ 0 ];
-			return getVisualScene( parseId( instance.getAttribute( 'url' ) ) );
-
-		}
-
-		console.time( 'ColladaLoader' );
-
-		if ( text.length === 0 ) {
-
-			return { scene: new THREE.Scene() };
-
-		}
-
-		console.time( 'ColladaLoader: DOMParser' );
-
-		var xml = new DOMParser().parseFromString( text, 'application/xml' );
-
-		console.timeEnd( 'ColladaLoader: DOMParser' );
-
-		var collada = getElementsByTagName( xml, 'COLLADA' )[ 0 ];
-
-		// metadata
-
-		var version = collada.getAttribute( 'version' );
-		console.log( 'ColladaLoader: File version', version );
-
-		var asset = parseAsset( getElementsByTagName( collada, 'asset' )[ 0 ] );
-
-		//
-
-		var library = {
-			images: {},
-			effects: {},
-			materials: {},
-			cameras: {},
-			lights: {},
-			geometries: {},
-			nodes: {},
-			visualScenes: {}
-		};
-
-		console.time( 'ColladaLoader: Parse' );
-
-		parseLibrary( collada, library.images, 'library_images', 'image', parseImage );
-		parseLibrary( collada, library.effects, 'library_effects', 'effect', parseEffect );
-		parseLibrary( collada, library.materials, 'library_materials', 'material', parseMaterial );
-		parseLibrary( collada, library.cameras, 'library_cameras', 'camera', parseCamera );
-		parseLibrary( collada, library.lights, 'library_lights', 'light', parseLight );
-		parseLibrary( collada, library.geometries, 'library_geometries', 'geometry', parseGeometry );
-		parseLibrary( collada, library.nodes, 'library_nodes', 'node', parseNode );
-		parseLibrary( collada, library.visualScenes, 'library_visual_scenes', 'visual_scene', parseVisualScene );
-
-		console.timeEnd( 'ColladaLoader: Parse' );
-
-		console.time( 'ColladaLoader: Build' );
-
-		buildLibrary( library.images, buildImage );
-		buildLibrary( library.effects, buildEffect );
-		buildLibrary( library.materials, buildMaterial );
-		buildLibrary( library.cameras, buildCamera );
-		buildLibrary( library.lights, buildLight );
-		buildLibrary( library.geometries, buildGeometry );
-		buildLibrary( library.nodes, buildNode );
-		buildLibrary( library.visualScenes, buildVisualScene );
-
-		console.timeEnd( 'ColladaLoader: Build' );
-
-		// console.log( library );
-
-		var scene = parseScene( getElementsByTagName( collada, 'scene' )[ 0 ] );
-
-		if ( asset.upAxis === 'Z_UP' ) {
-
-			scene.rotation.x = - Math.PI / 2;
-
-		}
-
-		scene.scale.multiplyScalar( asset.unit );
-
-		console.timeEnd( 'ColladaLoader' );
-
-		// console.log( scene );
-
-		return {
-			animations: [],
-			kinematics: { joints: [] },
-			scene: scene
-		};
-
-	}
-
-};
 
 // Export the THREE object for **Node.js**, with
 // backwards-compatibility for the old `require()` API. If we're in
@@ -46196,11 +44567,11 @@ var FloorplannerView = require('./floorplanner_view')
 var utils = require('../utils/utils')
 
 //************************************************************
-//	Planner 3D
-//	author: jdumasleon
-//	email: jdumasleon@gmail.com
+//  Planner 3D
+//  author: jdumasleon
+//  email: jdumasleon@gmail.com
 //
-//	floorplanner.js
+//  Floorplanner.js
 //************************************************************
 
 var Floorplanner = function(canvas, floorplan) {
@@ -46437,18 +44808,18 @@ var Floorplanner = function(canvas, floorplan) {
 }
 
 module.exports = Floorplanner;
-
-},{"../utils/utils":29,"./floorplanner_view":4,"jquery":1}],4:[function(require,module,exports){
+},{"../utils/utils":31,"./floorplanner_view":4,"jquery":1}],4:[function(require,module,exports){
 var JQUERY = require('jquery');
 var utils = require('../utils/utils')
 
 //************************************************************
-//	Planner 3D
-//	author: jdumasleon
-//	email: jdumasleon@gmail.com
+//  Planner 3D
+//  author: jdumasleon
+//  email: jdumasleon@gmail.com
 //
-//	floor planner view.js
+//  FloorplannerView.js
 //************************************************************
+
 
 var FloorplannerView = function(floorplan, viewmodel, canvas) {
 
@@ -46554,8 +44925,7 @@ var FloorplannerView = function(floorplan, viewmodel, canvas) {
     var realFeet = ((cm*0.393700) / 12);
     var feet = Math.floor(realFeet);
     var inches = Math.round((realFeet - feet) * 12);
-    //return feet + "'" + inches + '"';
-		return Math.trunc(cm*10)/1000 + " m";
+    return feet + "'" + inches + '"';
   }
 
   function drawEdgeLabel(edge) {
@@ -46717,8 +45087,7 @@ var FloorplannerView = function(floorplan, viewmodel, canvas) {
 }
 
 module.exports = FloorplannerView
-
-},{"../utils/utils":29,"jquery":1}],5:[function(require,module,exports){
+},{"../utils/utils":31,"jquery":1}],5:[function(require,module,exports){
 var THREE = require('three');
 
 var Item = require('./item');
@@ -46726,11 +45095,11 @@ var Item = require('./item');
 var utils = require('../utils/utils')
 
 //************************************************************
-//	Planner 3D
-//	author: jdumasleon
-//	email: jdumasleon@gmail.com
+//  Planner 3D
+//  author: jdumasleon
+//  email: jdumasleon@gmail.com
 //
-//	floor item.js
+//  FloorItem.js
 //************************************************************
 
 
@@ -46804,17 +45173,109 @@ FloorItem.prototype.isValidPosition = function(vec3) {
 }
 
 module.exports = FloorItem;
+},{"../utils/utils":31,"./item":9,"three":2}],6:[function(require,module,exports){
+var THREE = require('three');
 
-},{"../utils/utils":29,"./item":8,"three":2}],6:[function(require,module,exports){
+var Item = require('./item');
+
+var utils = require('../utils/utils')
+
+//************************************************************
+//  Planner 3D
+//  author: jdumasleon
+//  email: jdumasleon@gmail.com
+//
+//  FreeItem.js
+//************************************************************
+
+
+var FreeItem = function(three, metadata, geometry, material, position, rotation, scale) {
+    Item.call(this, three, metadata, geometry, material, position, rotation, scale);
+};
+
+FreeItem.prototype = Object.create(Item.prototype);
+
+FreeItem.prototype.placeInRoom = function() {
+    if (!this.position_set) {
+        var center = this.model.floorplan.getCenter();
+        this.position.x = center.x;
+        this.position.y = center.y;
+        this.position.z = center.z;
+    }
+};
+
+// FloorItem.prototype.resized = function() {
+//     // take action after a resize
+//     this.position.y = this.halfSize.y;
+// }
+
+FreeItem.prototype.moveToPosition = function(vec3, intersection) {
+    // keeps the position in the room and on the floor
+    if (!this.isValidPosition(vec3)) {
+        this.showError(vec3);
+        return;
+    } else {
+        this.hideError();
+        //vec3.y = this.position.y; // keep it on the floor!
+        this.position.copy(vec3);
+    }
+}
+
+
+FreeItem.prototype.isValidPosition = function(vec3) {
+    // var cornersXZ = this.getCorners('x', 'z', vec3);
+    // var cornersXY = this.getCorners('x', 'y', vec3);
+    // var cornersYZ = this.getCorners('y', 'z', vec3);
+		//
+    // // check if we are in a room
+    // var rooms = this.model.floorplan.getRooms();
+    // var isInARoom = false;
+    // for (var i = 0; i < rooms.length; i++) {
+    //     if( utils.pointInPolygon(vec3.x, vec3.z, rooms[i].interiorCorners) &&
+    //         utils.pointInPolygon(vec3.x, vec3.y, rooms[i].interiorCorners) &&
+    //         utils.pointInPolygon(vec3.y, vec3.z, rooms[i].interiorCorners) &&
+    //         !utils.polygonPolygonIntersect(cornersXZ, rooms[i].interiorCorners) &&
+    //         !utils.polygonPolygonIntersect(cornersXY, rooms[i].interiorCorners) &&
+    //         !utils.polygonPolygonIntersect(cornersYZ, rooms[i].interiorCorners)) {
+    //         isInARoom = true;
+    //     }
+    // }
+    // if (!isInARoom) {
+    //     //console.log('object not in a room');
+    //     return false;
+    // }
+		//
+    // // check if we are outside all other objects
+    // /*
+    // if (this.obstructFloorMoves) {
+    //     var objects = this.model.items.getItems();
+    //     for (var i = 0; i < objects.length; i++) {
+    //         if (objects[i] === this || !objects[i].obstructFloorMoves) {
+    //             continue;
+    //         }
+    //         if (!utils.polygonOutsidePolygon(corners, objects[i].getCorners('x', 'z')) ||
+    //             utils.polygonPolygonIntersect(corners, objects[i].getCorners('x', 'z'))) {
+    //             //console.log('object not outside other objects');
+    //             return false;
+    //         }
+    //     }
+    // }*/
+
+    return true;
+}
+
+module.exports = FreeItem;
+},{"../utils/utils":31,"./item":9,"three":2}],7:[function(require,module,exports){
 var InWallItem = require('./in_wall_item');
 
 //************************************************************
-//	Planner 3D
-//	author: jdumasleon
-//	email: jdumasleon@gmail.com
+//  Planner 3D
+//  author: jdumasleon
+//  email: jdumasleon@gmail.com
 //
-//	in wall floor item.js
+//  InWallFloorItem.js
 //************************************************************
+
 
 var InWallFloorItem = function(three, metadata, geometry, material, position, rotation, scale) {
     InWallItem.call(this, three, metadata, geometry, material, position, rotation, scale);
@@ -46824,16 +45285,15 @@ var InWallFloorItem = function(three, metadata, geometry, material, position, ro
 InWallFloorItem.prototype = Object.create(InWallItem.prototype);
 
 module.exports = InWallFloorItem;
-
-},{"./in_wall_item":7}],7:[function(require,module,exports){
+},{"./in_wall_item":8}],8:[function(require,module,exports){
 var WallItem = require('./wall_item');
 
 //************************************************************
-//	Planner 3D
-//	author: jdumasleon
-//	email: jdumasleon@gmail.com
+//  Planner 3D
+//  author: jdumasleon
+//  email: jdumasleon@gmail.com
 //
-//	in wall item.js
+//  InWallItem.js
 //************************************************************
 
 var InWallItem = function(three, metadata, geometry, material, position, rotation, scale) {
@@ -46849,19 +45309,17 @@ InWallItem.prototype.getWallOffset = function() {
 }
 
 module.exports = InWallItem;
-
-},{"./wall_item":11}],8:[function(require,module,exports){
+},{"./wall_item":13}],9:[function(require,module,exports){
 var THREE = require('three');
 
 var utils = require('../utils/utils')
 
-
 //************************************************************
-//	Planner 3D
-//	author: jdumasleon
-//	email: jdumasleon@gmail.com
+//  Planner 3D
+//  author: jdumasleon
+//  email: jdumasleon@gmail.com
 //
-//	item.js
+//  Item.js
 //************************************************************
 
 var Item = function(model, metadata, geometry, material, position, rotation, scale) {
@@ -47153,15 +45611,15 @@ Item.prototype.createGlow = function( color, opacity, ignoreDepth ) {
 
 module.exports = Item;
 
-},{"../utils/utils":29,"three":2}],9:[function(require,module,exports){
+},{"../utils/utils":31,"three":2}],10:[function(require,module,exports){
 var FloorItem = require('./floor_item');
 
 //************************************************************
-//	Planner 3D
-//	author: jdumasleon
-//	email: jdumasleon@gmail.com
+//  Planner 3D
+//  author: jdumasleon
+//  email: jdumasleon@gmail.com
 //
-//	on floor item.js
+//  OnFloorItem.js
 //************************************************************
 
 var OnFloorItem = function(three, metadata, geometry, material, position, rotation, scale) {
@@ -47173,16 +45631,100 @@ var OnFloorItem = function(three, metadata, geometry, material, position, rotati
 OnFloorItem.prototype = Object.create(FloorItem.prototype);
 
 module.exports = OnFloorItem;
+},{"./floor_item":5}],11:[function(require,module,exports){
+var THREE = require('three');
 
-},{"./floor_item":5}],10:[function(require,module,exports){
+var Item = require('./item');
+
+var utils = require('../utils/utils')
+
+//************************************************************
+//  Planner 3D
+//  author: jdumasleon
+//  email: jdumasleon@gmail.com
+//
+//  RoofItem.js
+//************************************************************
+
+var RoofItem = function(three, metadata, geometry, material, position, rotation, scale) {
+    Item.call(this, three, metadata, geometry, material, position, rotation, scale);
+};
+
+RoofItem.prototype = Object.create(Item.prototype);
+
+RoofItem.prototype.placeInRoom = function() {
+    if (!this.position_set) {
+        var center = this.model.floorplan.getCenter();
+        this.position.x = center.x;
+        this.position.z = center.z;
+        this.position.y = 4.5 * ( this.geometry.boundingBox.max.y - this.geometry.boundingBox.min.y );
+    }
+};
+
+RoofItem.prototype.resized = function() {
+    // take action after a resize
+    this.position.y = this.halfSize.y;
+}
+
+RoofItem.prototype.moveToPosition = function(vec3, intersection) {
+    // keeps the position in the room and on the floor
+    if (!this.isValidPosition(vec3)) {
+        this.showError(vec3);
+        return;
+    } else {
+        this.hideError();
+        vec3.y = this.position.y; // keep it on the floor!
+        this.position.copy(vec3);
+    }
+}
+
+
+RoofItem.prototype.isValidPosition = function(vec3) {
+    var corners = this.getCorners('x', 'z', vec3);
+
+    // check if we are in a room
+    var rooms = this.model.floorplan.getRooms();
+    var isInARoom = false;
+    for (var i = 0; i < rooms.length; i++) {
+        if(utils.pointInPolygon(vec3.x, vec3.z, rooms[i].interiorCorners) &&
+            !utils.polygonPolygonIntersect(corners, rooms[i].interiorCorners)) {
+            isInARoom = true;
+        }
+    }
+    if (!isInARoom) {
+        //console.log('object not in a room');
+        return false;
+    }
+
+    // check if we are outside all other objects
+    /*
+    if (this.obstructFloorMoves) {
+        var objects = this.model.items.getItems();
+        for (var i = 0; i < objects.length; i++) {
+            if (objects[i] === this || !objects[i].obstructFloorMoves) {
+                continue;
+            }
+            if (!utils.polygonOutsidePolygon(corners, objects[i].getCorners('x', 'z')) ||
+                utils.polygonPolygonIntersect(corners, objects[i].getCorners('x', 'z'))) {
+                //console.log('object not outside other objects');
+                return false;
+            }
+        }
+    }*/
+
+    return true;
+}
+
+module.exports = RoofItem;
+},{"../utils/utils":31,"./item":9,"three":2}],12:[function(require,module,exports){
 var WallItem = require('./wall_item');
 
 //************************************************************
-//	Planner 3D
-//	author: jdumasleon
-//	email: jdumasleon@gmail.com
+//  Planner 3D
+//  author: jdumasleon
+//  email: jdumasleon@gmail.com
 //
-//	wall floor item.js
+//  WallFloorItem.js
 //************************************************************
 
 var WallFloorItem = function(three, metadata, geometry, material, position, rotation, scale) {
@@ -47194,18 +45736,18 @@ WallFloorItem.prototype = Object.create(WallItem.prototype);
 
 module.exports = WallFloorItem;
 
-},{"./wall_item":11}],11:[function(require,module,exports){
+},{"./wall_item":13}],13:[function(require,module,exports){
 var THREE = require('three')
 var Item = require('./item')
 
 var utils = require('../utils/utils')
 
 //************************************************************
-//	Planner 3D
-//	author: jdumasleon
-//	email: jdumasleon@gmail.com
+//  Planner 3D
+//  author: jdumasleon
+//  email: jdumasleon@gmail.com
 //
-//	wall item.js
+//  WallItem.js
 //************************************************************
 
 var WallItem = function(model, metadata, geometry, material, position, rotation, scale) {
@@ -47396,17 +45938,17 @@ WallItem.prototype.boundMove = function(vec3) {
 
 module.exports = WallItem;
 
-},{"../utils/utils":29,"./item":8,"three":2}],12:[function(require,module,exports){
+},{"../utils/utils":31,"./item":9,"three":2}],14:[function(require,module,exports){
 var JQUERY = require('jquery');
 
 var utils = require('../utils/utils')
 
 //************************************************************
-//	Planner 3D
-//	author: jdumasleon
-//	email: jdumasleon@gmail.com
+//  Planner 3D
+//  author: jdumasleon
+//  email: jdumasleon@gmail.com
 //
-//	corners.js
+//  Corner.js
 //************************************************************
 
 // x and y are floats
@@ -47665,7 +46207,7 @@ var Corner = function(floorplan, x, y, id) {
 
 module.exports = Corner;
 
-},{"../utils/utils":29,"jquery":1}],13:[function(require,module,exports){
+},{"../utils/utils":31,"jquery":1}],15:[function(require,module,exports){
 var JQUERY = require('jquery');
 var THREE = require('three')
 
@@ -47677,12 +46219,13 @@ var HalfEdge = require('./half_edge')
 var utils = require('../utils/utils')
 
 //************************************************************
-//	Planner 3D
-//	author: jdumasleon
-//	email: jdumasleon@gmail.com
+//  Planner 3D
+//  author: jdumasleon
+//  email: jdumasleon@gmail.com
 //
-//	floorplan.js
+//  Floorplan.js
 //************************************************************
+
 
 var Floorplan = function() {
 
@@ -48118,18 +46661,18 @@ function findRooms(corners) {
 
 module.exports = Floorplan;
 
-},{"../utils/utils":29,"./corner":12,"./half_edge":14,"./room":16,"./wall":18,"jquery":1,"three":2}],14:[function(require,module,exports){
+},{"../utils/utils":31,"./corner":14,"./half_edge":16,"./room":18,"./wall":20,"jquery":1,"three":2}],16:[function(require,module,exports){
 var THREE = require('three')
 var JQUERY = require('jquery');
 
 var utils = require('../utils/utils')
 
 //************************************************************
-//	Planner 3D
-//	author: jdumasleon
-//	email: jdumasleon@gmail.com
+//  Planner 3D
+//  author: jdumasleon
+//  email: jdumasleon@gmail.com
 //
-//	half edge.js
+//  HalfEdge.js
 //************************************************************
 
 // HalfEdge's are created by Room
@@ -48388,7 +46931,7 @@ var HalfEdge = function(room, wall, front) {
 
 module.exports = HalfEdge;
 
-},{"../utils/utils":29,"jquery":1,"three":2}],15:[function(require,module,exports){
+},{"../utils/utils":31,"jquery":1,"three":2}],17:[function(require,module,exports){
 var JQUERY = require('jquery');
 var THREE = require('three')
 
@@ -48398,11 +46941,11 @@ var Scene = require('./scene');
 var utils = require('../utils/utils')
 
 //************************************************************
-//	Planner 3D
-//	author: jdumasleon
-//	email: jdumasleon@gmail.com
+//  Planner 3D
+//  author: jdumasleon
+//  email: jdumasleon@gmail.com
 //
-//	model.js
+//  Model.js
 //************************************************************
 
 var Model = function(textureDir) {
@@ -48489,7 +47032,7 @@ var Model = function(textureDir) {
 
 module.exports = Model;
 
-},{"../utils/utils":29,"./floorplan":13,"./scene":17,"jquery":1,"three":2}],16:[function(require,module,exports){
+},{"../utils/utils":31,"./floorplan":15,"./scene":19,"jquery":1,"three":2}],18:[function(require,module,exports){
 var JQUERY = require('jquery');
 var THREE = require('three')
 
@@ -48505,11 +47048,11 @@ var Polygon = require('polygon')
 var HalfEdge = require('./half_edge')
 
 //************************************************************
-//	Planner 3D
-//	author: jdumasleon
-//	email: jdumasleon@gmail.com
+//  Planner 3D
+//  author: jdumasleon
+//  email: jdumasleon@gmail.com
 //
-//	room.js
+//  Room.js
 //************************************************************
 
 var Room = function(floorplan, corners) {
@@ -48649,12 +47192,14 @@ var Room = function(floorplan, corners) {
 
 module.exports = Room;
 
-},{"../utils/utils":29,"./half_edge":14,"jquery":1,"three":2}],17:[function(require,module,exports){
+},{"../utils/utils":31,"./half_edge":16,"jquery":1,"three":2}],19:[function(require,module,exports){
 var THREE = require('three')
 
 var JQUERY = require('jquery');
 
 var FloorItem = require('../items/floor_item');
+var FreeItem = require('../items/free_item');
+var RoofItem = require('../items/roof_item');
 var InWallFloorItem = require('../items/in_wall_floor_item');
 var InWallItem = require('../items/in_wall_item');
 var Item = require('../items/item');
@@ -48665,13 +47210,12 @@ var WallItem = require('../items/wall_item');
 var utils = require('../utils/utils')
 
 //************************************************************
-//	Planner 3D
-//	author: jdumasleon
-//	email: jdumasleon@gmail.com
+//  Planner 3D
+//  author: jdumasleon
+//  email: jdumasleon@gmail.com
 //
-//	scene.js
+//  scene.js
 //************************************************************
-
 
 var Scene = function(model, textureDir) {
   var scope = this;
@@ -48685,7 +47229,7 @@ var Scene = function(model, textureDir) {
 
   // init item loader
   var loader = new THREE.JSONLoader();
-	var colladaloader = new THREE.ColladaLoader();
+
   loader.crossOrigin = "";
 
   var item_types = {
@@ -48694,7 +47238,9 @@ var Scene = function(model, textureDir) {
     3: InWallItem,
     7: InWallFloorItem,
     8: OnFloorItem,
-    9: WallFloorItem
+    9: WallFloorItem,
+    10: RoofItem,
+    11: FreeItem
   };
 
   // init callbacks
@@ -48769,20 +47315,57 @@ var Scene = function(model, textureDir) {
     );
   }
 
+  this.addColladaItem = function(itemType, fileName, metadata, position, rotation, scale, fixed) {
+    itemType = itemType || 1;
+
+    colladaloader.options.convertUpAxis = true;
+
+    var loaderCallback = function ( collada ) {
+      var item = new item_types[itemType](
+        model,
+        metadata, collada.library_geometries,
+        new THREE.MeshFaceMaterial(collada.library_materials),
+        position, rotation, scale
+      );
+
+      dae = collada.scene;
+
+      //dae.scale.x = dae.scale.y = dae.scale.z = 0.002;
+      dae.updateMatrix();
+
+      item.fixed = fixed || false;
+      items.push(item);
+      scope.add(dae);
+      scope.add(item);
+      item.initObject();
+      scope.itemLoadedCallbacks.fire(item);
+    }
+
+    // Function called when download progresses
+    var logFunction = function ( xhr ) {
+      console.log( (xhr.loaded / xhr.total * 100) + '% loaded' );
+    }
+
+    scope.itemLoadingCallbacks.fire();
+    colladaloader.load(
+      fileName,
+      loaderCallback,
+      logFunction );
+ }
 }
 
 module.exports = Scene;
 
-},{"../items/floor_item":5,"../items/in_wall_floor_item":6,"../items/in_wall_item":7,"../items/item":8,"../items/on_floor_item":9,"../items/wall_floor_item":10,"../items/wall_item":11,"../utils/utils":29,"jquery":1,"three":2}],18:[function(require,module,exports){
+},{"../items/floor_item":5,"../items/free_item":6,"../items/in_wall_floor_item":7,"../items/in_wall_item":8,"../items/item":9,"../items/on_floor_item":10,"../items/roof_item":11,"../items/wall_floor_item":12,"../items/wall_item":13,"../utils/utils":31,"jquery":1,"three":2}],20:[function(require,module,exports){
 var JQUERY = require('jquery');
 var utils = require('../utils/utils')
 
 //************************************************************
-//	Planner 3D
-//	author: jdumasleon
-//	email: jdumasleon@gmail.com
+//  Planner 3D
+//  author: jdumasleon
+//  email: jdumasleon@gmail.com
 //
-//	wall.js
+//  Wall.js
 //************************************************************
 
 // start and end are Corner objects
@@ -48942,18 +47525,18 @@ var Wall = function(start, end) {
 
 module.exports = Wall;
 
-},{"../utils/utils":29,"jquery":1}],19:[function(require,module,exports){
+},{"../utils/utils":31,"jquery":1}],21:[function(require,module,exports){
 (function (global){
 var ThreeMain = require('./three/three_main.js');
 var Model = require('./model/model.js');
 var Floorplanner = require('./floorplanner/floorplanner');
 
 //************************************************************
-//	Planner 3D
-//	author: jdumasleon
-//	email: jdumasleon@gmail.com
+//  Planner 3D
+//  author: jdumasleon
+//  email: jdumasleon@gmail.com
 //
-//	Planner 3D.js
+//  Planner3D main.js
 //************************************************************
 
 global.Planner3D = function(opts) {
@@ -48972,17 +47555,17 @@ global.Planner3D = function(opts) {
 
 
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{"./floorplanner/floorplanner":3,"./model/model.js":15,"./three/three_main.js":27}],20:[function(require,module,exports){
+},{"./floorplanner/floorplanner":3,"./model/model.js":17,"./three/three_main.js":29}],22:[function(require,module,exports){
 var JQUERY = require('jquery');
 var THREE = require('three')
 var utils = require('../utils/utils')
 
 //************************************************************
-//	Planner 3D
-//	author: jdumasleon
-//	email: jdumasleon@gmail.com
+//  Planner 3D
+//  author: jdumasleon
+//  email: jdumasleon@gmail.com
 //
-//	three controller.js
+//  ThreeController.js
 //************************************************************
 
 var ThreeController = function(three, model, camera, element, controls, hud) {
@@ -49435,8 +48018,8 @@ var ThreeController = function(three, model, camera, element, controls, hud) {
 
 module.exports = ThreeController;
 
-},{"../utils/utils":29,"jquery":1,"three":2}],21:[function(require,module,exports){
-/**
+},{"../utils/utils":31,"jquery":1,"three":2}],23:[function(require,module,exports){
+	/**
 This file is a modified version of THREE.OrbitControls
 Contributors:
  * @author qiao / https://github.com/qiao
@@ -49446,16 +48029,15 @@ Contributors:
  * @author erich666 / http://erichaines.com
  */
 
-
 var JQUERY = require('jquery');
 var THREE = require('three')
 
 //************************************************************
-//	Planner 3D
-//	author: jdumasleon
-//	email: jdumasleon@gmail.com
+//  Planner 3D
+//  author: jdumasleon
+//  email: jdumasleon@gmail.com
 //
-//	three controls.js
+//  ThreeControls.js
 //************************************************************
 
 var ThreeControls = function (object, domElement) {
@@ -49478,7 +48060,7 @@ var ThreeControls = function (object, domElement) {
 	this.zoomSpeed = 1.0;
 	// Limits to how far you can dolly in and out
 	this.minDistance = 0;
-	this.maxDistance = 2500; //Infinity;
+	this.maxDistance = 1500; //Infinity;
 
 	// Set to true to disable this control
 	this.noRotate = false;
@@ -49815,7 +48397,7 @@ var ThreeControls = function (object, domElement) {
 
 			scope.dollyIn();
 		}
-    scope.update();
+   		scope.update();
 	}
 
 	function onKeyDown( event ) {
@@ -49964,16 +48546,17 @@ var ThreeControls = function (object, domElement) {
 
 module.exports = ThreeControls;
 
-},{"jquery":1,"three":2}],22:[function(require,module,exports){
+},{"jquery":1,"three":2}],24:[function(require,module,exports){
 var THREE = require('three')
 var utils = require('../utils/utils')
 
+
 //************************************************************
-//	Planner 3D
-//	author: jdumasleon
-//	email: jdumasleon@gmail.com
+//  Planner 3D
+//  author: jdumasleon
+//  email: jdumasleon@gmail.com
 //
-//	three edge.js
+//  ThreeEdge.js
 //************************************************************
 
 var ThreeEdge = function(scene, edge, controls) {
@@ -50287,16 +48870,16 @@ var ThreeEdge = function(scene, edge, controls) {
 
 module.exports = ThreeEdge;
 
-},{"../utils/utils":29,"three":2}],23:[function(require,module,exports){
+},{"../utils/utils":31,"three":2}],25:[function(require,module,exports){
 var THREE = require('three')
 var utils = require('../utils/utils')
 
 //************************************************************
-//	Planner 3D
-//	author: jdumasleon
-//	email: jdumasleon@gmail.com
+//  Planner 3D
+//  author: jdumasleon
+//  email: jdumasleon@gmail.com
 //
-//	three floor.js
+//  ThreeFloor.js
 //************************************************************
 
 var ThreeFloor = function(scene, room) {
@@ -50400,18 +48983,18 @@ var ThreeFloor = function(scene, room) {
 
 module.exports = ThreeFloor;
 
-},{"../utils/utils":29,"three":2}],24:[function(require,module,exports){
+},{"../utils/utils":31,"three":2}],26:[function(require,module,exports){
 var THREE = require('three')
 var ThreeFloor = require('./three_floor');
 var ThreeEdge = require('./three_edge');
 var utils = require('../utils/utils')
 
 //************************************************************
-//	Planner 3D
-//	author: jdumasleon
-//	email: jdumasleon@gmail.com
+//  Planner 3D
+//  author: jdumasleon
+//  email: jdumasleon@gmail.com
 //
-//	three floorplan.js
+//  ThreeFloorplan.js
 //************************************************************
 
 // THREE.Scene, Blueprint.Floorplan
@@ -50458,22 +49041,21 @@ ThreeFloorplan = function(scene, floorplan, controls) {
 
 module.exports = ThreeFloorplan;
 
-},{"../utils/utils":29,"./three_edge":22,"./three_floor":23,"three":2}],25:[function(require,module,exports){
-var THREE = require('three');
-
-var utils = require('../utils/utils')
-
+},{"../utils/utils":31,"./three_edge":24,"./three_floor":25,"three":2}],27:[function(require,module,exports){
 /*
 * Drawings on "top" of the scene.
 * e.g. rotate arrows
 */
+var THREE = require('three');
+
+var utils = require('../utils/utils')
 
 //************************************************************
-//	Planner 3D
-//	author: jdumasleon
-//	email: jdumasleon@gmail.com
+//  Planner 3D
+//  author: jdumasleon
+//  email: jdumasleon@gmail.com
 //
-//	three hud.js
+//  ThreeHUD.js
 //************************************************************
 
 var ThreeHUD = function(three) {
@@ -50635,15 +49217,15 @@ var ThreeHUD = function(three) {
 
 module.exports = ThreeHUD;
 
-},{"../utils/utils":29,"three":2}],26:[function(require,module,exports){
+},{"../utils/utils":31,"three":2}],28:[function(require,module,exports){
 var THREE = require('three');
 
 //************************************************************
-//	Planner 3D
-//	author: jdumasleon
-//	email: jdumasleon@gmail.com
+//  Planner 3D
+//  author: jdumasleon
+//  email: jdumasleon@gmail.com
 //
-//	three lights.js
+//  ThreeLights.js
 //************************************************************
 
 var ThreeLights = function(scene, floorplan) {
@@ -50662,12 +49244,12 @@ var ThreeLights = function(scene, floorplan) {
   }
 
   function init() {
-    var light = new THREE.HemisphereLight( 0xB9B9B9, 0x888888, 1.1 );
+    var light = new THREE.HemisphereLight( 0xffffff, 0x888888, 1.0 );
     light.position.set(0, height, 0);
     scene.add(light);
 
-    dirLight = new THREE.DirectionalLight( 0xffffff, 0.5 );
-    //dirLight.color.setHSL( 1, 1, 0.1 );
+    dirLight = new THREE.DirectionalLight( 0xffffff, 0 );
+    dirLight.color.setHSL( 1, 1, 0.1 );
 
     dirLight.castShadow = true;
 
@@ -50679,7 +49261,6 @@ var ThreeLights = function(scene, floorplan) {
     dirLight.shadowDarkness = 0.2;
     dirLight.visible = true;
     dirLight.shadowCameraVisible = false;
-		dirLight.position.set( 5, 10, 7.5 );
 
     scene.add(dirLight);
     scene.add(dirLight.target);
@@ -50718,7 +49299,7 @@ var ThreeLights = function(scene, floorplan) {
 
 module.exports = ThreeLights;
 
-},{"three":2}],27:[function(require,module,exports){
+},{"three":2}],29:[function(require,module,exports){
 var THREE = require('three')
 var JQUERY = require('jquery');
 
@@ -50731,11 +49312,11 @@ var ThreeControls = require('./three_controls');
 var ThreeHUD = require('./three_hud.js')
 
 //************************************************************
-//	Planner 3D
-//	author: jdumasleon
-//	email: jdumasleon@gmail.com
+//  Planner 3D
+//  author: jdumasleon
+//  email: jdumasleon@gmail.com
 //
-//	three main.js
+//  ThreeMain.js
 //************************************************************
 
 var ThreeMain = function(model, element, canvasElement, opts) {
@@ -50796,7 +49377,7 @@ var ThreeMain = function(model, element, canvasElement, opts) {
   function init() {
     THREE.ImageUtils.crossOrigin = "";
 
-    domElement = scope.element.get(0); // Container
+    domElement = scope.element.get(0) // Container
     camera = new THREE.PerspectiveCamera(45, 1, 1, 10000);
     renderer = new THREE.WebGLRenderer({
       antialias: true,
@@ -50816,7 +49397,7 @@ var ThreeMain = function(model, element, canvasElement, opts) {
     controller = new ThreeController(
       scope, model, camera, scope.element, scope.controls, hud);
 
-		domElement.appendChild(renderer.domElement);
+    domElement.appendChild(renderer.domElement);
 
     // handle window resizing
     scope.updateWindowSize();
@@ -50997,15 +49578,15 @@ var ThreeMain = function(model, element, canvasElement, opts) {
 
 module.exports = ThreeMain;
 
-},{"./three_controller":20,"./three_controls":21,"./three_floorplan":24,"./three_hud.js":25,"./three_lights":26,"./three_skybox":28,"jquery":1,"three":2}],28:[function(require,module,exports){
+},{"./three_controller":22,"./three_controls":23,"./three_floorplan":26,"./three_hud.js":27,"./three_lights":28,"./three_skybox":30,"jquery":1,"three":2}],30:[function(require,module,exports){
 var THREE = require('three')
 
 //************************************************************
-//	Planner 3D
-//	author: jdumasleon
-//	email: jdumasleon@gmail.com
+//  Planner 3D
+//  author: jdumasleon
+//  email: jdumasleon@gmail.com
 //
-//	three skybox.js
+//  ThreeSkybox.js
 //************************************************************
 
 ThreeSkybox = function(scene) {
@@ -51076,13 +49657,13 @@ ThreeSkybox = function(scene) {
 
 module.exports = ThreeSkybox;
 
-},{"three":2}],29:[function(require,module,exports){
+},{"three":2}],31:[function(require,module,exports){
 //************************************************************
-//	Planner 3D
-//	author: jdumasleon
-//	email: jdumasleon@gmail.com
+//  Planner 3D
+//  author: jdumasleon
+//  email: jdumasleon@gmail.com
 //
-//	utils.js
+//  Utils.js
 //************************************************************
 
 var utils = {};
@@ -51415,4 +49996,4 @@ utils.subtract = function(array, subArray) {
 
 module.exports = utils;
 
-},{}]},{},[19]);
+},{}]},{},[21]);

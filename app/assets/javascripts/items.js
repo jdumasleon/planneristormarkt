@@ -12,13 +12,13 @@ $(document).ready(function() {
        "name" : "EFA0002",
        "image" : "planner/models/thumbnails/assets/EFA0002.jpg",
        "model" : "planner/models/js/assets/EFA0002.js",
-       "type" : "1"
+       "type" : "10"
     },
     {
        "name" : "VS7080CFG",
        "image" : "planner/models/thumbnails/assets/VS7080CFG.jpg",
        "model" : "planner/models/js/assets/VS7080CFG.js",
-       "type" : "1"
+       "type" : "11"
     },
     {
       "name" : "HCD0008",
