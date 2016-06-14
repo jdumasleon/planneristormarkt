@@ -1,8 +1,8 @@
 # Planner RistorMarkt : demo application
 
 This is the sample application for
-[Demo application for planner for RistorMarkt](http://railstutorial.org/)
-by [Jose Luis Dumas Leon](http://michaelhartl.com/). You can use this reference implementation to help track down errors if you end up having trouble with code in the demo. In particular, as a first debugging check I suggest getting the test suite to pass on your local machine:
+[Demo application for planner for RistorMarkt](https://planneristormarkt.herokuapp.com/)
+by [Jose Luis Dumas Leon](jdumasleon@gmail.com) You can use this reference implementation to help track down errors if you end up having trouble with code in the demo. In particular, as a first debugging check I suggest getting the test suite to pass on your local machine:
 
     cd /tmp
     git clone https://git@bitbucket.org:jdumasleon/plannerristormarkt.git
