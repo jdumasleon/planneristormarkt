@@ -15,10 +15,22 @@ $(document).ready(function() {
        "type" : "10"
     },
     {
+       "name" : "CS920",
+       "image" : "planner/models/thumbnails/assets/CS920.jpg",
+       "model" : "planner/models/js/assets/CS920.js",
+       "type" : "2"
+    },
+    {
+       "name" : "DAC0020",
+       "image" : "planner/models/thumbnails/assets/DAC0020.jpg",
+       "model" : "planner/models/js/assets/DAC0020.js",
+       "type" : "10"
+    },
+    {
        "name" : "VS7080CFG",
        "image" : "planner/models/thumbnails/assets/VS7080CFG.jpg",
        "model" : "planner/models/js/assets/VS7080CFG.js",
-       "type" : "11"
+       "type" : "1"
     },
     {
       "name" : "HCD0008",

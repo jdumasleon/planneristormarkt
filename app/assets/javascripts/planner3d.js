@@ -45657,7 +45657,7 @@ RoofItem.prototype.placeInRoom = function() {
         var center = this.model.floorplan.getCenter();
         this.position.x = center.x;
         this.position.z = center.z;
-        this.position.y = 4.5 * ( this.geometry.boundingBox.max.y - this.geometry.boundingBox.min.y );
+        this.position.y = 5.1 * ( this.geometry.boundingBox.max.y - this.geometry.boundingBox.min.y );
     }
 };
 
